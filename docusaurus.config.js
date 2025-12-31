@@ -154,7 +154,7 @@ const config = {
           },
           // GitHub link (right side)
           {
-            href: 'https://github.com/harjeet2020/knowledge-base',
+            href: 'https://github.com/harjeet2020/waypoints',
             label: 'GitHub',
             position: 'right',
           },
@@ -229,7 +229,7 @@ const config = {
               },
               {
                 label: 'GitHub',
-                href: 'https://github.com/harjeet2020/knowledge-base',
+                href: 'https://github.com/harjeet2020/waypoints',
               },
             ],
           },
