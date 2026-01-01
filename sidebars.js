@@ -26,6 +26,7 @@ const sidebars = {
       label: 'Fundamentals',
       collapsed: false,
       items: [
+        'algorithms/learning-journey/fundamentals/how-computers-work',
         'algorithms/learning-journey/fundamentals/memory-management',
         'algorithms/learning-journey/fundamentals/big-o-notation',
         'algorithms/learning-journey/fundamentals/math-prerequisites',
