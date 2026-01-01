@@ -241,7 +241,7 @@ const config = {
       prism: {
         theme: require('prism-react-renderer').themes.github,
         darkTheme: require('prism-react-renderer').themes.dracula,
-        additionalLanguages: ['bash', 'json', 'typescript', 'tsx', 'python', 'java', 'sql'],
+        additionalLanguages: ['bash', 'json', 'typescript', 'tsx', 'python', 'java', 'sql', 'cpp'],
       },
 
       // Table of contents

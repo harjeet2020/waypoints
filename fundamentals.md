@@ -13,18 +13,40 @@ All files live in:
 docs/algorithms/learning-journey/fundamentals/
 ```
 
-| Order | Filename                         | Sidebar Label              |
-|-------|----------------------------------|----------------------------|
-| 1     | `01-how-computers-work.md`       | How Computers Work         |
-| 2     | `02-binary-and-data.md`          | Binary & Data              |
-| 3     | `03-logic-gates.md`              | Logic Gates                |
-| 4     | `04-assembly-basics.md`          | Assembly Basics            |
-| 5     | `05-programming-languages.md`    | Programming Languages      |
-| 6     | `06-types-and-memory-layout.md`  | Types & Memory Layout      |
-| 7     | `07-memory-management.md`        | Memory Management          |
-| 8     | `08-abstraction-and-paradigms.md`| Abstraction & Paradigms    |
-| 9     | `09-algorithms-and-complexity.md`| Algorithms & Complexity    |
-| 10    | `10-math-prerequisites.md`       | Math Prerequisites         |
+The section is divided into three sub-categories:
+
+### Hardware Foundations
+
+The physical machine and how it represents data.
+
+| Order | Filename                   | Sidebar Label        |
+|-------|----------------------------|----------------------|
+| 1     | `how-computers-work.md`    | How Computers Work   |
+| 2     | `binary-basics.md`         | Binary Basics        |
+| 3     | `representing-numbers.md`  | Representing Numbers |
+| 4     | `representing-text.md`     | Representing Text    |
+| 5     | `logic-gates.md`           | Logic Gates          |
+
+### The Layers of Software
+
+The bridge from hardware to high-level programming.
+
+| Order | Filename                     | Sidebar Label           |
+|-------|------------------------------|-------------------------|
+| 1     | `assembly-basics.md`         | Assembly Basics         |
+| 2     | `programming-languages.md`   | Programming Languages   |
+| 3     | `types-and-memory-layout.md` | Types & Memory Layout   |
+| 4     | `memory-management.md`       | Memory Management       |
+| 5     | `abstraction-and-paradigms.md` | Abstraction & Paradigms |
+
+### Introduction to Algorithms
+
+Measuring efficiency and the math behind it.
+
+| Order | Filename                     | Sidebar Label           |
+|-------|------------------------------|-------------------------|
+| 1     | `algorithms-and-complexity.md` | Algorithms & Complexity |
+| 2     | `math-prerequisites.md`      | Math Prerequisites      |
 
 ---
 
@@ -38,16 +60,39 @@ Update `sidebars.js` to include:
   label: 'Fundamentals',
   collapsed: false,
   items: [
-    'algorithms/learning-journey/fundamentals/01-how-computers-work',
-    'algorithms/learning-journey/fundamentals/02-binary-and-data',
-    'algorithms/learning-journey/fundamentals/03-logic-gates',
-    'algorithms/learning-journey/fundamentals/04-assembly-basics',
-    'algorithms/learning-journey/fundamentals/05-programming-languages',
-    'algorithms/learning-journey/fundamentals/06-types-and-memory-layout',
-    'algorithms/learning-journey/fundamentals/07-memory-management',
-    'algorithms/learning-journey/fundamentals/08-abstraction-and-paradigms',
-    'algorithms/learning-journey/fundamentals/09-algorithms-and-complexity',
-    'algorithms/learning-journey/fundamentals/10-math-prerequisites',
+    {
+      type: 'category',
+      label: 'Hardware Foundations',
+      collapsed: false,
+      items: [
+        'algorithms/learning-journey/fundamentals/how-computers-work',
+        'algorithms/learning-journey/fundamentals/binary-basics',
+        'algorithms/learning-journey/fundamentals/representing-numbers',
+        'algorithms/learning-journey/fundamentals/representing-text',
+        'algorithms/learning-journey/fundamentals/logic-gates',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'The Layers of Software',
+      collapsed: false,
+      items: [
+        'algorithms/learning-journey/fundamentals/assembly-basics',
+        'algorithms/learning-journey/fundamentals/programming-languages',
+        'algorithms/learning-journey/fundamentals/types-and-memory-layout',
+        'algorithms/learning-journey/fundamentals/memory-management',
+        'algorithms/learning-journey/fundamentals/abstraction-and-paradigms',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Introduction to Algorithms',
+      collapsed: false,
+      items: [
+        'algorithms/learning-journey/fundamentals/algorithms-and-complexity',
+        'algorithms/learning-journey/fundamentals/math-prerequisites',
+      ],
+    },
   ],
 },
 ```
@@ -56,7 +101,9 @@ Update `sidebars.js` to include:
 
 ## File-by-File Breakdown
 
-### 1. `01-how-computers-work.md` — The Machine
+### Hardware Foundations
+
+#### `how-computers-work.md` — The Machine
 
 **Goal:** Establish a mental model of the physical computer before diving into code.
 
@@ -70,27 +117,67 @@ Update `sidebars.js` to include:
 
 ---
 
-### 2. `02-binary-and-data.md` — The Language of Computers
+#### `binary-basics.md` — The Language of Computers
 
-**Goal:** Understand *why* everything is 1s and 0s and how data is represented.
+**Goal:** Understand *why* everything is 1s and 0s and how binary works.
 
 **Topics:**
 - Why binary? (electricity = on/off, reliability)
-- Bits and bytes—the fundamental units
+- How transistors work (MOSFET basics, on/off states)
+- Why not use more states? (noise immunity, reliability)
+- The binary number system as a positional system
 - Converting binary ↔ decimal (with practice exercises)
-- Hexadecimal as a shorthand
-- How negative numbers work (two's complement)
-- Floating-point numbers (brief intro to IEEE 754 quirks)
-- Primitive data types and their typical sizes:
-  - `boolean` (1 bit conceptually, 1 byte in practice)
-  - `char` (1-4 bytes depending on encoding)
-  - `int` / `short` / `long` (2/4/8 bytes)
-  - `float` / `double` (4/8 bytes)
-- ASCII and Unicode basics
+- Hexadecimal as a shorthand (why it maps perfectly to 4 bits)
+- Bits and bytes—the fundamental units
+- Larger units (KB, MB, GB) and why we use powers of 2
 
 ---
 
-### 3. `03-logic-gates.md` — How Hardware Computes
+#### `representing-numbers.md` — Numbers in Binary
+
+**Goal:** Understand how computers represent integers and decimals.
+
+**Topics:**
+- Unsigned integers (straightforward binary)
+- The problem with negative numbers
+- Sign-magnitude and its flaws (two zeros, broken addition)
+- Two's complement: the elegant solution
+  - How it works (invert and add 1)
+  - Why it works (modular arithmetic, 2ⁿ - N)
+  - Why addition "just works"
+- Signed vs unsigned types (explicit control over range)
+- Integer overflow and language-specific behavior
+- Floating-point numbers (IEEE 754):
+  - Scientific notation in binary
+  - The format: sign, exponent, mantissa
+  - Encoding step by step
+  - When numbers cannot be represented exactly (0.1 + 0.2)
+  - Error accumulation and catastrophic cancellation
+  - Strategies for numerical stability
+- Float vs double (precision and range)
+- Common pitfalls: never use floats for money
+
+---
+
+#### `representing-text.md` — Text in Binary
+
+**Goal:** Understand how characters and strings are encoded.
+
+**Topics:**
+- ASCII: the original standard (7-bit, 128 characters)
+- ASCII tricks (case conversion, digit extraction)
+- The limitation of ASCII (non-English characters)
+- Unicode: the universal standard (code points)
+- UTF-8: the practical encoding
+  - Variable-length encoding (1-4 bytes)
+  - Backwards compatibility with ASCII
+  - How to determine byte length from leading bits
+- String length surprises (UTF-16 code units vs characters)
+- Practical implications for file I/O and network data
+
+---
+
+#### `logic-gates.md` — How Hardware Computes
 
 **Goal:** Demystify how electronic circuits can "think."
 
@@ -109,7 +196,9 @@ Update `sidebars.js` to include:
 
 ---
 
-### 4. `04-assembly-basics.md` — The Bridge to Software
+### The Layers of Software
+
+#### `assembly-basics.md` — The Bridge to Software
 
 **Goal:** See what the CPU actually executes, making high-level languages feel less magical.
 
@@ -129,7 +218,7 @@ Update `sidebars.js` to include:
 
 ---
 
-### 5. `05-programming-languages.md` — Abstracting the Machine
+#### `programming-languages.md` — Abstracting the Machine
 
 **Goal:** Understand what programming languages do for us and how they differ.
 
@@ -151,7 +240,7 @@ Update `sidebars.js` to include:
 
 ---
 
-### 6. `06-types-and-memory-layout.md` — How Data Lives in Memory
+#### `types-and-memory-layout.md` — How Data Lives in Memory
 
 **Goal:** Understand where your data goes and common bugs that arise from not knowing.
 
@@ -171,7 +260,7 @@ Update `sidebars.js` to include:
 
 ---
 
-### 7. `07-memory-management.md` — Who Cleans Up?
+#### `memory-management.md` — Who Cleans Up?
 
 **Goal:** Understand how programs manage memory and why it matters for performance.
 
@@ -196,7 +285,7 @@ Update `sidebars.js` to include:
 
 ---
 
-### 8. `08-abstraction-and-paradigms.md` — Organizing Complexity
+#### `abstraction-and-paradigms.md` — Organizing Complexity
 
 **Goal:** Understand why we structure code the way we do, and the costs of abstraction.
 
@@ -219,7 +308,9 @@ Update `sidebars.js` to include:
 
 ---
 
-### 9. `09-algorithms-and-complexity.md` — Measuring Efficiency
+### Introduction to Algorithms
+
+#### `algorithms-and-complexity.md` — Measuring Efficiency
 
 **Goal:** Understand what algorithms are and how we measure their performance.
 
@@ -244,7 +335,7 @@ Update `sidebars.js` to include:
 
 ---
 
-### 10. `10-math-prerequisites.md` — Tools for Analysis
+#### `math-prerequisites.md` — Tools for Analysis
 
 **Goal:** Reference sheet for mathematical concepts that appear frequently in CS.
 
@@ -265,13 +356,23 @@ Update `sidebars.js` to include:
 
 ## Pedagogical Rationale
 
-The order follows a **bottom-up approach**:
+The order follows a **bottom-up approach**, organized into three categories:
 
-1. **Hardware first** (files 1-3): Establishes *why* things work the way they do
-2. **Assembly as a bridge** (file 4): Connects hardware to software
-3. **Languages and types** (files 5-7): How we write and organize data
-4. **Abstraction** (file 8): How we manage complexity
-5. **Analysis** (files 9-10): How we measure and improve
+1. **Hardware Foundations** (5 files): Establishes *why* things work the way they do
+   - Physical hardware (CPU, RAM, storage)
+   - Binary representation and why computers use it
+   - How numbers and text are encoded
+   - Logic gates and how hardware computes
+
+2. **The Layers of Software** (5 files): Bridges hardware to high-level programming
+   - Assembly as the lowest software layer
+   - How programming languages abstract the machine
+   - Types, memory layout, and memory management
+   - Abstraction and programming paradigms
+
+3. **Introduction to Algorithms** (2 files): How we measure and improve
+   - Algorithm analysis and Big O notation
+   - Mathematical tools for understanding complexity
 
 This way, when readers reach Big O notation, they already understand *why* certain operations are faster (memory access patterns, CPU cycles) rather than just memorizing "O(n) is slower than O(log n)."
 
@@ -279,15 +380,29 @@ This way, when readers reach Big O notation, they already understand *why* certa
 
 ## Progress Tracker
 
+### Hardware Foundations
+
 | File | Status | Notes |
 |------|--------|-------|
-| `01-how-computers-work.md` | Not started | |
-| `02-binary-and-data.md` | Not started | |
-| `03-logic-gates.md` | Not started | |
-| `04-assembly-basics.md` | Not started | |
-| `05-programming-languages.md` | Not started | |
-| `06-types-and-memory-layout.md` | Not started | |
-| `07-memory-management.md` | Not started | Existing placeholder to be replaced |
-| `08-abstraction-and-paradigms.md` | Not started | |
-| `09-algorithms-and-complexity.md` | Not started | Existing `big-o-notation.md` to be replaced |
-| `10-math-prerequisites.md` | Not started | Existing placeholder to be replaced |
+| `how-computers-work.md` | Complete | |
+| `binary-basics.md` | In progress | Split from original binary-and-data.md |
+| `representing-numbers.md` | In progress | Split from original binary-and-data.md |
+| `representing-text.md` | In progress | Split from original binary-and-data.md |
+| `logic-gates.md` | Not started | |
+
+### The Layers of Software
+
+| File | Status | Notes |
+|------|--------|-------|
+| `assembly-basics.md` | Not started | |
+| `programming-languages.md` | Not started | |
+| `types-and-memory-layout.md` | Not started | |
+| `memory-management.md` | Not started | Existing placeholder to be replaced |
+| `abstraction-and-paradigms.md` | Not started | |
+
+### Introduction to Algorithms
+
+| File | Status | Notes |
+|------|--------|-------|
+| `algorithms-and-complexity.md` | Not started | Existing `big-o-notation.md` to be replaced |
+| `math-prerequisites.md` | Not started | Existing placeholder to be replaced |

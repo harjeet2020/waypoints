@@ -1,5 +1,5 @@
 ---
-title: Memory Management
+title: Logic Gates
 ---
 
 *This article is coming soon.*

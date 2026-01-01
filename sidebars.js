@@ -26,10 +26,39 @@ const sidebars = {
       label: 'Fundamentals',
       collapsed: false,
       items: [
-        'algorithms/learning-journey/fundamentals/how-computers-work',
-        'algorithms/learning-journey/fundamentals/memory-management',
-        'algorithms/learning-journey/fundamentals/big-o-notation',
-        'algorithms/learning-journey/fundamentals/math-prerequisites',
+        {
+          type: 'category',
+          label: 'Hardware Foundations',
+          collapsed: false,
+          items: [
+            'algorithms/learning-journey/fundamentals/how-computers-work',
+            'algorithms/learning-journey/fundamentals/binary-basics',
+            'algorithms/learning-journey/fundamentals/representing-numbers',
+            'algorithms/learning-journey/fundamentals/representing-text',
+            'algorithms/learning-journey/fundamentals/logic-gates',
+          ],
+        },
+        {
+          type: 'category',
+          label: 'The Layers of Software',
+          collapsed: false,
+          items: [
+            'algorithms/learning-journey/fundamentals/assembly-basics',
+            'algorithms/learning-journey/fundamentals/programming-languages',
+            'algorithms/learning-journey/fundamentals/types-and-memory-layout',
+            'algorithms/learning-journey/fundamentals/memory-management',
+            'algorithms/learning-journey/fundamentals/abstraction-and-paradigms',
+          ],
+        },
+        {
+          type: 'category',
+          label: 'Introduction to Algorithms',
+          collapsed: false,
+          items: [
+            'algorithms/learning-journey/fundamentals/algorithms-and-complexity',
+            'algorithms/learning-journey/fundamentals/math-prerequisites',
+          ],
+        },
       ],
     },
     {
