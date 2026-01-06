@@ -1,7 +1,6 @@
 ---
 title: Binary Basics
 ---
-
 ## The Language of Machines
 
 In the previous section, we explored the physical components of a computer: **CPU**, **RAM**, and **Storage**. This gives us a high-level overview of how a computer operates, but it also raises another question. How does a machine made of silicon and electricity understand anything at all? How does it store data and follow logical instructions?
@@ -16,7 +15,7 @@ This might seem limiting at first. How can two digits possibly represent the ric
 
 To understand why computers use binary, we need to look at what they are made of. A computer is an electrical machine. At the heart of every processor lie billions of **transistors**: microscopic electronic switches etched into silicon. A modern CPU contains tens of billions of them, each smaller than a virus.
 
-The purpose of transistors is to map the flow of electrical current to a value we can measure. If the current is flowing through a transistor, we assign it the value of 1 (true). If it isn't, it becomes 0 (false). This simple mapping of energy flow state to a number is what enables computers to represent data, perform arithmetic operations and follow logical instructions. We will see exactly how in the following articles, but for now, let us return to the transistors and the binary.
+The purpose of transistors is to map the flow of electrical current to a value we can measure. If the current is flowing through a transistor, we assign it the value of 1 (true). If it isn't, it becomes 0 (false). This simple mapping of energy flow state to a number is what enables computers to represent data, perform arithmetic operations and follow logical instructions. We will see exactly how in the following articles - but for now, let us return to the transistors and the binary.
 
 Unlike a dimmer switch with a range of settings, a transistor operates in just two states: **on** or **off**. There is no "medium" setting, no dial from 1 to 10. This is not a limitation of our engineering; it is a deliberate choice rooted in physics and reliability. To see why, we need to understand how these tiny switches actually work.
 

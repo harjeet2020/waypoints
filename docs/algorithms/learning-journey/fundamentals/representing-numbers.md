@@ -1,7 +1,6 @@
 ---
 title: Representing Numbers
 ---
-
 ## Beyond Positive Integers
 
 In the previous article, we learned how binary works: a positional number system where each digit represents a power of 2. We saw how to convert between binary and decimal, and how bytes group 8 bits together to represent values from 0 to 255.
@@ -12,7 +11,7 @@ In this article, we will explore how computers represent the full spectrum of nu
 
 ## Negative Numbers
 
-How does a computer represent -5 or -1000? The answer is not as simple as adding a minus sign.
+How does a computer store negative values like -5 or -1000? As it turns out, the answer is not as simple as adding a minus sign.
 
 ### The Naive Approach: Sign Bit
 
@@ -45,7 +44,7 @@ The CPU can't just add the bits. It needs special logic
 to detect opposite signs and perform subtraction instead.
 ```
 
-This complexity requires extra circuitry and slows down the most common operation in computing. We need a better approach.
+This approach would require extra circuitry, slowing down the most common operation in computing. We need a better approach.
 
 ### Two's Complement: The Elegant Solution
 
@@ -108,7 +107,7 @@ Adding 5 + (-3):
     00000010   (discard the overflow bit → 2)
 ```
 
-But *why* does this work? Let's trace through the math:
+Let's trace through the math:
 
 - We want to compute `5 + (-3) = 2`
 - In two's complement, -3 is stored as `256 - 3 = 253`
@@ -189,42 +188,93 @@ Always consider whether your values might exceed the type's range.
 
 ## Floating-Point Numbers
 
-Integers are straightforward, but what about numbers like 3.14159 or 0.001? These provide a unique kind of challenge: some numbers have infinite decimal places, like `1/3 = 0.3333333... = 0.(3)`.
+We have seen how two's complement elegantly handles negative integers, and how choosing between signed and unsigned types affects our available range. But integers, whether negative or positive, share a fundamental limitation: they can only represent whole numbers.
 
-### The Challenge
+What about 3.14159 or 0.001? Real programs need fractions constantly: prices with cents, GPS coordinates with decimal degrees, scientific measurements with arbitrary precision. We cannot simply "add a decimal point" to our integer representation. Binary has no concept of a decimal point; it only knows 1s and 0s.
 
-We cannot store infinite decimal places, so floating-point is inherently an approximation. The standard used by virtually all modern computers is **IEEE 754**, which defines how to encode decimal values in binary.
+This challenge requires a fundamentally different approach.
 
-### Scientific Notation in Binary
+### The Range Problem
 
-Before diving into the format, let's understand the core idea. In decimal, we use scientific notation to write numbers compactly:
-
-```
-6.75 = 6.75 × 10⁰
-675  = 6.75 × 10²
-0.0675 = 6.75 × 10⁻²
-```
-
-Binary works the same way, but with powers of 2:
+With integers, each bit position has a fixed meaning: the ones place, the twos place, the fours place, and so on. We could try the same approach for decimals by splitting our bits between an integer part and a fractional part. This is called **fixed-point** representation:
 
 ```
-6.75 in binary = 110.11
-              = 1.1011 × 2²
+Fixed-point with 4 integer bits and 4 fractional bits:
+
+    0101.1100
+    ↓↓↓↓ ↓↓↓↓
+    8421.½¼⅛1/16
+
+    = 4 + 1 + 0.5 + 0.25 = 5.75
 ```
 
-:::info
-How did we get `110.11`? Just like decimal places represent 10⁻¹, 10⁻², etc., binary places after the point represent 2⁻¹, 2⁻², etc.:
+This works, but it forces a painful trade-off. With only 4 integer bits, we max out at 15. With only 4 fractional bits, our smallest step is 0.0625. We cannot represent both 0.000001 and 1,000,000.5 with the same fixed-point format. We must choose: precision for small numbers OR the ability to represent large numbers.
+
+**Floating-point** solves this by letting the decimal point "float", moving left or right depending on the number's magnitude. This is where the name comes from. A tiny number like 0.000001 shifts the point far to the left; a huge number like 1,000,000.5 shifts it to the right. The same bits can represent vastly different scales.
+
+### Scientific Notation
+
+Floating-point is built on scientific notation, so let's make sure we understand it thoroughly.
+
+In scientific notation, every number is broken into three components:
+
+```
+ -6.75 × 10²
+ ↑ ↑      ↑
+ │ │      └── Exponent: how far to shift the decimal point
+ │ └───────── Significand (or Mantissa): the meaningful digits
+ └────────── Sign: positive or negative
+```
+
+- The **sign** tells us if the number is positive or negative.
+- The **significand** (also called the **mantissa**) contains the actual digits. We "normalize" it so there is exactly one non-zero digit before the decimal point.
+- The **exponent** tells us how many places to shift the decimal. Positive exponents shift right (making larger numbers), negative exponents shift left (making smaller numbers).
+
+```
+Scientific notation examples:
+
+  675     = 6.75 × 10²   (shift decimal 2 places right)
+  6.75    = 6.75 × 10⁰   (no shift)
+  0.0675  = 6.75 × 10⁻²  (shift decimal 2 places left)
+  -0.0675 = -6.75 × 10⁻² (same, but negative)
+```
+
+The beauty of this system is that we can represent numbers of wildly different magnitudes by simply adjusting the exponent, while keeping the same precision in the significand.
+
+### Binary Scientific Notation
+
+Binary scientific notation works identically, but with powers of 2 instead of powers of 10:
+
+```
+6.75 in binary:
+
+Step 1: Convert to binary
+   6.75 = 4 + 2 + 0.5 + 0.25
+        = 110.11 in binary
+
+Step 2: Normalize (one digit before the point)
+   110.11 = 1.1011 × 2²
+            ↑ ↑      ↑
+            │ │      └── Exponent: 2 (we shifted 2 places)
+            │ └───────── Mantissa: 1011 (digits after the point)
+            └────────── The leading 1 (always present when normalized)
+```
+
+:::info Binary Decimals
+How did we get `110.11` from `6.75`? Just like decimal places represent 10⁻¹, 10⁻², etc., binary places after the point represent 2⁻¹, 2⁻², etc.:
 
 ```
 Binary: 1   1   0  .  1     1
         ↓   ↓   ↓     ↓     ↓
         4 + 2 + 0  + 0.5 + 0.25 = 6.75
 ```
+
+The first binary decimal place is ½, the second is ¼, the third is ⅛, and so on.
 :::
 
 ### The IEEE 754 Format
 
-A 32-bit floating-point number is stored in three parts:
+Now we are ready to understand **IEEE 754**, the standard that virtually all modern computers use for floating-point. It is simply a way to pack the three components of binary scientific notation into a fixed number of bits:
 
 ```
 ┌──────────────────────────────────────────────────────┐
@@ -240,23 +290,76 @@ A 32-bit floating-point number is stored in three parts:
 └──────────────────────────────────────────────────────┘
 ```
 
-- **Sign (1 bit):** 0 for positive, 1 for negative
-- **Exponent (8 bits):** The power of 2, stored with a bias of 127
-- **Mantissa (23 bits):** The fractional part after the leading 1
+Each component maps directly to what we learned about scientific notation:
 
-The **bias** is a clever trick. Instead of storing negative exponents with a sign bit, we add 127 to the actual exponent. So an exponent of 2 is stored as 129 (2 + 127), and an exponent of -3 is stored as 124 (-3 + 127).
+- **Sign (1 bit):** 0 for positive, 1 for negative. Straightforward.
+- **Exponent (8 bits):** The power of 2 that tells us where to place the decimal point.
+- **Mantissa (23 bits):** The significant digits after the decimal point.
 
-The **implicit leading 1** is another space-saving trick. Since normalized binary numbers always start with 1 (like `1.1011 × 2²`), we don't store it. The mantissa only holds the bits after the decimal point.
+Two clever tricks make this format more efficient:
+
+**The bias trick:** Exponents can be negative (for numbers like 0.001), but storing negative numbers would require a sign bit. Instead, IEEE 754 adds 127 to the actual exponent before storing it. An exponent of 2 is stored as 129 (2 + 127); an exponent of -3 is stored as 124 (-3 + 127). This way, all stored exponents are positive, and comparison becomes simpler.
+
+**The implicit leading 1:** When we normalize a binary number, it always starts with 1 (like `1.1011 × 2²`). Since this leading 1 is always there, why waste a bit storing it? The mantissa only holds the digits *after* the decimal point. The leading 1 is implied.
+
+:::info The "Floating" Window of Precision
+A 32-bit float has about 7 significant digits of precision, but *where* those digits apply depends on the exponent:
+
+| Magnitude | Example Value  | Smallest Step (Precision) |
+|-----------|----------------|---------------------------|
+| 2⁻¹⁰      | ~0.001         | ~0.0000000001             |
+| 2⁰        | ~1             | ~0.0000001                |
+| 2¹⁰       | ~1,000         | ~0.0001                   |
+| 2²⁰       | ~1,000,000     | ~0.1                      |
+| 2²⁴       | ~16,777,216    | 1 (integers only!)        |
+| 2³⁰       | ~1,000,000,000 | ~100                      |
+
+At small magnitudes, you can distinguish between 0.0000001 and 0.0000002. At large magnitudes, you cannot even tell the difference between 16,777,216 and 16,777,217. They round to the same float!
+
+This is what "floating point" means: the decimal point floats to give you precision where the number lives, rather than at a fixed position. You always get ~7 meaningful digits, but the exponent determines which 7 digits those are.
+:::
 
 ### Encoding a Number: Step by Step
 
-Let's encode **6.75** as a 32-bit float:
+Let's encode **6.75** as a 32-bit float. The first challenge is converting the decimal to binary, and fractions require a different technique than whole numbers.
+
+**Converting the integer part** is familiar: repeatedly divide by 2 and collect remainders.
+
+```
+6 ÷ 2 = 3 remainder 0  ↑
+3 ÷ 2 = 1 remainder 1  │ Read upward: 110
+1 ÷ 2 = 0 remainder 1  │
+```
+
+**Converting the fractional part** works in reverse: repeatedly *multiply* by 2. Each multiplication asks: "Does this fraction contain the next binary place?"
+
+Remember that binary decimal places represent ½, ¼, ⅛, and so on. When we multiply a fraction by 2, we're asking whether the next binary digit is 1 or 0:
+- If the result is **≥ 1**, the digit is **1** (the fraction contains that power of ½)
+- If the result is **< 1**, the digit is **0** (it doesn't)
+
+```
+Converting 0.75 to binary:
+
+0.75 × 2 = 1.50  → 1  (0.75 contains ½; continue with 0.50)
+0.50 × 2 = 1.00  → 1  (0.50 contains ¼; continue with 0.00)
+0.00 × 2 = 0.00  → done!
+
+Reading top to bottom: 0.75 = 0.11 in binary
+```
+
+Let's verify: 0.11 in binary = ½ + ¼ = 0.5 + 0.25 = 0.75 ✓
+
+The algorithm terminated cleanly because 0.75 (which is ¾) can be expressed as a sum of powers of 2. This will become important shortly.
+
+**Now we can encode 6.75:**
 
 ```
 Step 1: Convert to binary
-   6.75 = 4 + 2 + 0.5 + 0.25 = 110.11 in binary
+   Integer part: 6 = 110
+   Fractional part: 0.75 = 0.11
+   Combined: 6.75 = 110.11
 
-Step 2: Normalize (move decimal so there's one digit before it)
+Step 2: Normalize (one digit before the point)
    110.11 = 1.1011 × 2²
 
 Step 3: Extract the components
@@ -288,27 +391,39 @@ Value = +1 × 1.1011 × 2²
 
 ### When Numbers Cannot Be Represented Exactly
 
-The number 6.75 worked perfectly because it's a sum of powers of 2. But what about **0.1**?
+The number 6.75 encoded perfectly. But watch what happens with **0.1**:
 
 ```
-0.1 in binary:
+Converting 0.1 to binary:
 
 0.1 × 2 = 0.2  → 0
 0.2 × 2 = 0.4  → 0
 0.4 × 2 = 0.8  → 0
-0.8 × 2 = 1.6  → 1, continue with 0.6
-0.6 × 2 = 1.2  → 1, continue with 0.2
-0.2 × 2 = 0.4  → 0  ← Pattern repeats!
-...
+0.8 × 2 = 1.6  → 1  (continue with 0.6)
+0.6 × 2 = 1.2  → 1  (continue with 0.2)
+0.2 × 2 = 0.4  → 0  ← We've seen 0.2 before!
+0.4 × 2 = 0.8  → 0
+0.8 × 2 = 1.6  → 1  (continue with 0.6)
+...the pattern repeats forever
 
-0.1 = 0.00011001100110011... (repeating forever)
+0.1 = 0.00011001100110011... (repeating)
 ```
 
-Just like 1/3 = 0.333... in decimal, 0.1 has an infinite representation in binary. With only 23 bits for the mantissa, we must truncate, introducing a small error.
+The algorithm never terminates. We keep cycling through 0.2 → 0.4 → 0.8 → 0.6 → 0.2, producing the pattern `0011` forever.
 
-The stored value of 0.1 is actually:
+**Why does 0.75 terminate but 0.1 repeat?**
+
+A fraction has a finite binary representation only if its denominator is a power of 2. Let's look at both:
+
+- **0.75 = ¾ = 3/4** → Denominator is 4 = 2². Terminates!
+- **0.1 = 1/10** → Denominator is 10 = 2 × 5. The factor of 5 cannot be represented in binary. Repeats forever.
+
+This is analogous to decimal: 1/4 = 0.25 terminates, but 1/3 = 0.333... repeats forever because 3 is not a factor of 10.
+
+**The consequence:** With only 23 bits for the mantissa, we must truncate 0.1's infinite representation. The stored value is not 0.1, but the closest 23-bit approximation:
+
 ```
-0.1000000000000000055511151231257827021181583404541015625
+Stored value: 0.1000000000000000055511151231257827021181583404541015625
 ```
 
 This is why `0.1 + 0.2 !== 0.3`:
@@ -324,6 +439,8 @@ This is why `0.1 + 0.2 !== 0.3`:
 // Which is NOT equal to:
 0.2999999999999999888...  // (what 0.3 actually stores as)
 ```
+
+Both 0.1 + 0.2 and 0.3 are approximations, but they are *different* approximations. The errors don't cancel out; they accumulate.
 
 ### Floating-Point Arithmetic and Error Accumulation
 
@@ -373,91 +490,126 @@ When you add 1 to 10¹⁵, the 1 is so small relative to the large number that i
 4. **Use higher precision when needed:** 64-bit double instead of 32-bit float
 :::
 
-### The Quirks You Must Know
-
-```javascript
-// Classic floating-point weirdness
-console.log(0.1 + 0.2);           // 0.30000000000000004
-console.log(0.1 + 0.2 === 0.3);   // false!
-
-// Large integers lose precision in floats
-console.log(9007199254740993);     // 9007199254740992 (wrong!)
-
-// Special values
-console.log(1 / 0);               // Infinity
-console.log(-1 / 0);              // -Infinity
-console.log(0 / 0);               // NaN (Not a Number)
-console.log(NaN === NaN);         // false (NaN is never equal to itself!)
-
-// Checking for NaN
-console.log(Number.isNaN(NaN));   // true
-```
-
-:::danger Never Use Floats for Money
-Because of precision issues, never use floating-point for financial calculations:
-
-```javascript
-// WRONG
-let balance = 0.10 + 0.20;  // 0.30000000000000004
-
-// RIGHT: Use integers (cents) or a decimal library
-let balanceCents = 10 + 20;  // 30 cents
-```
-
-Many financial bugs have been caused by floating-point errors. Use integer arithmetic (store cents, not dollars) or specialized decimal libraries.
-:::
-
 ### Comparing Floating-Point Numbers
 
-Never use `===` to compare floats directly. Instead, check if they're "close enough":
+Since floating-point arithmetic introduces small errors, exact equality checks are unreliable:
 
 ```javascript
-// Bad: exact comparison
-if (result === 0.3) { /* unreliable */ }
+const result = 0.1 + 0.2;
+console.log(result === 0.3);  // false (we've seen why!)
+```
 
-// Good: epsilon comparison
+Instead, check if two numbers are "close enough" using an **epsilon comparison**. The idea is simple: if the difference between two numbers is smaller than some tiny threshold (epsilon), treat them as equal.
+
+```javascript
 const EPSILON = 1e-10;
-if (Math.abs(result - 0.3) < EPSILON) { /* reliable */ }
 
-// Better: relative epsilon for numbers of varying magnitude
+function nearlyEqual(a, b) {
+  return Math.abs(a - b) < EPSILON;
+}
+
+console.log(nearlyEqual(0.1 + 0.2, 0.3));  // true
+```
+
+But there is a subtlety. A fixed epsilon like `1e-10` works for numbers near zero, but what about very large numbers? The difference between 1,000,000.0 and 1,000,000.0000001 might exceed `1e-10` even though they are effectively identical.
+
+The solution is a **relative epsilon**: instead of a fixed threshold, use a fraction of the numbers' magnitude.
+
+```javascript
 function nearlyEqual(a, b, relEpsilon = 1e-9) {
   const diff = Math.abs(a - b);
   const largest = Math.max(Math.abs(a), Math.abs(b));
   return diff <= largest * relEpsilon;
 }
+
+// Works for small numbers
+nearlyEqual(0.1 + 0.2, 0.3);                    // true
+
+// Works for large numbers too
+nearlyEqual(1000000.1 + 1000000.2, 2000000.3);  // true
 ```
+
+### Handling Money and Financial Calculations
+
+Floating-point errors are unacceptable in financial applications. A fraction of a cent, compounded over millions of transactions, can mean real money lost or gained.
+
+**The simple solution: use integers.** Store monetary values as the smallest unit (cents, pence, satoshis) rather than as decimal dollars:
+
+```javascript
+// WRONG: floating-point dollars
+let balance = 0.10 + 0.20;       // 0.30000000000000004
+let total = balance * 100;       // 30.000000000000004 cents (!)
+
+// RIGHT: integer cents
+let balanceCents = 10 + 20;      // 30 cents, exactly
+let displayDollars = balanceCents / 100;  // Convert only for display
+```
+
+This approach works well for most applications. Perform all arithmetic in cents (or your smallest unit), and only convert to decimal for display.
+
+**For complex financial applications**, consider a dedicated decimal library that represents numbers as strings or arrays of digits, avoiding binary floating-point entirely:
+
+```javascript
+// Using a library like decimal.js or big.js
+import Decimal from 'decimal.js';
+
+const price = new Decimal('19.99');
+const tax = new Decimal('0.08');
+const total = price.times(tax.plus(1));
+
+console.log(total.toString());  // "21.5892" (exact)
+```
+
+These libraries are slower than native floats, but correctness matters more than speed when money is involved.
 
 ### Float vs Double
 
-| Type   | Bits | Precision        | Range                    |
-|--------|------|------------------|--------------------------|
-| float  | 32   | ~7 digits        | ±3.4 × 10³⁸              |
-| double | 64   | ~15-16 digits    | ±1.8 × 10³⁰⁸             |
-
-JavaScript uses 64-bit doubles for all numbers. Python also uses doubles. In languages like C, Java, or Rust, you choose explicitly.
-
-<details>
-<summary>Practice: Encode -13.5 as a 32-bit float</summary>
+So far we have focused on 32-bit floats, but most languages default to 64-bit **doubles** (short for "double precision"). Where do those extra 32 bits go?
 
 ```
-Step 1: Convert to binary
-   13.5 = 8 + 4 + 1 + 0.5 = 1101.1
+32-bit float:
+┌──────┬────────────┬───────────────────────────┐
+│ Sign │  Exponent  │         Mantissa          │
+│ 1bit │   8 bits   │         23 bits           │
+└──────┴────────────┴───────────────────────────┘
 
-Step 2: Normalize
-   1101.1 = 1.1011 × 2³
-
-Step 3: Extract components
-   Sign: 1 (negative)
-   Exponent: 3 + 127 = 130 = 10000010
-   Mantissa: 1011 → 10110000000000000000000
-
-Step 4: Assemble
-   1 10000010 10110000000000000000000
-
-Hex: 0xC1580000
+64-bit double:
+┌──────┬─────────────┬────────────────────────────────────────────────────┐
+│ Sign │  Exponent   │                     Mantissa                       │
+│ 1bit │   11 bits   │                     52 bits                        │
+└──────┴─────────────┴────────────────────────────────────────────────────┘
 ```
 
-</details>
+The mantissa more than doubles (23 → 52 bits), which is why precision jumps from ~7 to ~16 significant digits. The exponent also grows (8 → 11 bits), extending the representable range dramatically.
+
+| Type   | Bits | Mantissa | Precision     | Range        |
+|--------|------|----------|---------------|--------------|
+| float  | 32   | 23 bits  | ~7 digits     | ±3.4 × 10³⁸  |
+| double | 64   | 52 bits  | ~15-16 digits | ±1.8 × 10³⁰⁸ |
+
+**What does this mean in practice?**
+
+Both formats have error when storing 0.1, but double gets 9 more correct digits:
+
+```
+Float stores 0.1 as:  0.100000001490116...
+Double stores 0.1 as: 0.100000000000000005551115...
+                           └── 9 more correct digits ──┘
+```
+
+Perhaps more striking is the **largest consecutive integer** each format can represent exactly. Remember from our precision table that at some magnitude, even +1 becomes too small to represent:
+
+```
+Float:  16,777,216      (2²⁴) ← cannot distinguish 16,777,216 from 16,777,217
+Double: 9,007,199,254,740,992 (2⁵³) ← about 9 quadrillion
+```
+
+This is why JavaScript (which uses doubles for all numbers) has `Number.MAX_SAFE_INTEGER` set to 9,007,199,254,740,991.
+
+**When to use which?**
+
+- **Double (64-bit):** The safe default. Use for most calculations, scientific computing, and any time precision matters. This is what JavaScript and Python use for all numbers.
+- **Float (32-bit):** Use when memory or bandwidth is critical and reduced precision is acceptable. Common in graphics programming (GPUs process millions of vertices), game physics, audio processing, and machine learning (where "close enough" is fine and speed matters).
 
 ## Key Takeaways
 

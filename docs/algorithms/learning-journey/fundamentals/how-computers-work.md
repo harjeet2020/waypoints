@@ -12,6 +12,10 @@ Knowing how low-level hardware operates, you will:
 - **Make better architectural decisions** about where to store data and how to process it
 - **Understand why** certain best practices exist instead of just memorizing them
 
+That is why our exploration of computer science must begin at hardware. Don't worry, we won't be diving too much into technical details; we will be looking at computers from the perspective of a software, not an electrical engineer. Still, do arm yourself in patience - developing even a basic grasp of all the layers of hardware and software that make computers function as they do requires time.
+
+In this article, we will cover high-level basics.
+
 ## The Core Trio: CPU, RAM, and Storage
 
 Every computer has three essential components that work together:
@@ -28,7 +32,7 @@ Every computer has three essential components that work together:
 └─────────────────────────────────────────────────────────────┘
 ```
 
-Let us now explore those in more details. I have found that the best way to visualize this is through analogy: so imagine you're a chef (the CPU) working in a kitchen.
+Our purpose today will be to understand what each of those does, and how they work together. The best way to visualize this is through analogy: imagine you're a chef (the CPU) working in a kitchen.
 
 ---
 ### The CPU: The Brain
@@ -300,8 +304,4 @@ While waiting for slow operations (disk, network), the CPU could be doing other 
 
 ## Looking Ahead
 
-Now that we have a basic grasp of hardware, we can move on to:
-
-- **Binary & Data:** How all information is represented as 1s and 0s
-- **Logic Gates:** How simple circuits can "think"
-- **Assembly Basics:** What the CPU actually executes
+Now that we have a basic grasp of hardware, we can have a look at how computers work on a low level. The next three articles will focus on **binary** - why computers use 1s and 0s, and how we represent different data types such as negative / floating-point numbers, or characters / strings.
