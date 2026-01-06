@@ -1,5 +1,5 @@
 ---
-title: Merge Sort
+title: Advanced Data Structures
 ---
 
 This article is coming soon.

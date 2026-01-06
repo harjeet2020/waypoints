@@ -1,7 +1,5 @@
-# PostgreSQL
+---
+title: PostgreSQL
+---
 
-PostgreSQL knowledge, SQL patterns, and relational database concepts.
-
-## Topics
-
-<!-- TODO: Add PostgreSQL topics as they're written -->
+This article is coming soon.

@@ -1,5 +1,5 @@
 ---
-title: Merge Sort
+title: Binary Search
 ---
 
 This article is coming soon.

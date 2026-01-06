@@ -1,11 +1,11 @@
-# Journal
+---
+title: Journal
+---
 
-Technical articles, learning notes, and explorations organized by topic.
+There is room for creative writing even in the world of tech. This is where I let my thoughts wander beyond the structured learning paths and reference material. Some entries are technical deep dives into specific problems I have encountered. Others are more philosophical reflections on the craft of building software, the nature of learning, or the changing landscape of our industry.
 
-## Recent Articles
+Unlike the rest of this site, the journal follows no particular order or curriculum. It is simply a collection of things I found interesting enough to write about.
 
-<!-- TODO: Add articles as they're written -->
+## Articles
 
-## Topics
-
-Articles will be grouped by topic as the collection grows.
+- [How to Use AI in Coding (Without Creating a Mess)](/journal/ai-in-coding) - A practical guide to vibe coding, examining what AI is good at, where it struggles, and how to get the most out of it without drowning in technical debt.

@@ -1,5 +1,5 @@
 ---
-title: Merge Sort
+title: Graph
 ---
 
 This article is coming soon.
