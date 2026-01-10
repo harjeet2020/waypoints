@@ -37,6 +37,9 @@ const sidebars = {
             'algorithms/learning-journey/fundamentals/representing-numbers',
             'algorithms/learning-journey/fundamentals/representing-text',
             'algorithms/learning-journey/fundamentals/logic-gates',
+            'algorithms/learning-journey/fundamentals/combinational-circuits',
+            'algorithms/learning-journey/fundamentals/sequential-circuits',
+            'algorithms/learning-journey/fundamentals/io-and-interrupts',
           ],
         },
         {
@@ -45,9 +48,15 @@ const sidebars = {
           collapsed: false,
           items: [
             'algorithms/learning-journey/fundamentals/assembly-basics',
+            'algorithms/learning-journey/fundamentals/operating-systems',
             'algorithms/learning-journey/fundamentals/programming-languages',
+            'algorithms/learning-journey/fundamentals/compilation',
+            'algorithms/learning-journey/fundamentals/interpretation',
             'algorithms/learning-journey/fundamentals/types-and-memory-layout',
+            'algorithms/learning-journey/fundamentals/stack-and-heap',
             'algorithms/learning-journey/fundamentals/memory-management',
+            'algorithms/learning-journey/fundamentals/concurrency',
+            'algorithms/learning-journey/fundamentals/networking',
             'algorithms/learning-journey/fundamentals/abstraction-and-paradigms',
           ],
         },
@@ -56,6 +65,7 @@ const sidebars = {
           label: 'Introduction to Algorithms',
           collapsed: false,
           items: [
+            'algorithms/learning-journey/fundamentals/recursion',
             'algorithms/learning-journey/fundamentals/algorithms-and-complexity',
             'algorithms/learning-journey/fundamentals/math-prerequisites',
           ],
