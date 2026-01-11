@@ -77,7 +77,30 @@ const sidebars = {
       label: 'Data Structures',
       collapsed: false,
       items: [
-        'algorithms/learning-journey/data-structures/arrays',
+        {
+          type: 'category',
+          label: 'Arrays',
+          collapsed: true,
+          link: { type: 'doc', id: 'algorithms/learning-journey/data-structures/arrays/index' },
+          items: [
+            'algorithms/learning-journey/data-structures/arrays/internals',
+            'algorithms/learning-journey/data-structures/arrays/operations',
+            {
+              type: 'category',
+              label: 'Practice Problems',
+              collapsed: true,
+              link: { type: 'doc', id: 'algorithms/learning-journey/data-structures/arrays/practice/index' },
+              items: [
+                'algorithms/learning-journey/data-structures/arrays/practice/find-maximum',
+                'algorithms/learning-journey/data-structures/arrays/practice/reverse-array',
+                'algorithms/learning-journey/data-structures/arrays/practice/remove-element',
+                'algorithms/learning-journey/data-structures/arrays/practice/move-zeroes',
+                'algorithms/learning-journey/data-structures/arrays/practice/merge-sorted-arrays',
+                'algorithms/learning-journey/data-structures/arrays/practice/rotate-array',
+              ],
+            },
+          ],
+        },
         'algorithms/learning-journey/data-structures/strings',
         'algorithms/learning-journey/data-structures/linked-lists',
         'algorithms/learning-journey/data-structures/stacks',
