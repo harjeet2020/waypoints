@@ -1,0 +1,97 @@
+---
+title: Reverse Array
+---
+
+## Problem Statement
+
+Given an array of integers, reverse it in-place and return the modified array.
+
+**Function Signature:**
+
+```javascript
+function reverseArray(arr) {
+  // Your code here
+}
+```
+
+## Examples
+
+| Input | Output | Explanation |
+|-------|--------|-------------|
+| `[1, 2, 3, 4, 5]` | `[5, 4, 3, 2, 1]` | Elements are reversed |
+| `[1, 2]` | `[2, 1]` | Two elements swap positions |
+| `[42]` | `[42]` | Single element stays the same |
+
+## Constraints
+
+- Array length: 0 ≤ arr.length ≤ 10,000
+- Element values: -10⁹ ≤ arr[i] ≤ 10⁹
+
+## Interactive Editor
+
+<PracticeEditor
+  problemId="arrays-reverse-array"
+  functionName="reverseArray"
+  starterCode={`function reverseArray(arr) {
+  // Your code here
+
+}`}
+  solutionCode={`function reverseArray(arr) {
+  let left = 0;
+  let right = arr.length - 1;
+
+  while (left < right) {
+    const temp = arr[left];
+    arr[left] = arr[right];
+    arr[right] = temp;
+    left++;
+    right--;
+  }
+
+  return arr;
+}`}
+  testCases={[
+    { input: [[1, 2, 3, 4, 5]], expected: [5, 4, 3, 2, 1], description: "Odd length array" },
+    { input: [[1, 2, 3, 4]], expected: [4, 3, 2, 1], description: "Even length array" },
+    { input: [[1, 2]], expected: [2, 1], description: "Two elements" },
+    { input: [[42]], expected: [42], description: "Single element" },
+    { input: [[]], expected: [], description: "Empty array" },
+  ]}
+/>
+
+## Hints
+
+<details>
+<summary>Hint 1: Two Pointers</summary>
+
+Use two pointers starting at opposite ends of the array. Swap the elements they point to, then move them toward each other.
+
+</details>
+
+## Solution
+
+<details>
+<summary>View Solution Explanation</summary>
+
+```javascript
+function reverseArray(arr) {
+  let left = 0;
+  let right = arr.length - 1;
+
+  while (left < right) {
+    const temp = arr[left];
+    arr[left] = arr[right];
+    arr[right] = temp;
+    left++;
+    right--;
+  }
+
+  return arr;
+}
+```
+
+Swap elements at `left` and `right` pointers, then move them inward until they meet.
+
+**Complexity:** O(n) time, O(1) space.
+
+</details>

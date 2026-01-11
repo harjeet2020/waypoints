@@ -1,45 +1,42 @@
 ---
-title: Learning Journey
+title: DSA Learning Journey
 ---
+Before the dawn of the information era, knowledge was scarce, and always came at a premium price. These days, knowledge is essentially free - the internet is brimming with it, and LLMs can retrieve it for us at lightning-fast speeds. However, nowadays we face a different problem - there is so much knowledge available that we often get lost in it. Our time is a limited resource, and we simply don't have enough of it to learn all the things we would like to know.
 
-Problem solving is the foundation of software engineering. It is easy to forget, among all the layers of abstraction we have built over the years, that the essence of programming is effective use of loops and conditionals. When I was first introduced to algorithms and data structures, I quickly developed a loathing for the topic. Why spend hours solving riddles instead of building something useful? I still believe today that practical skills and hands-on experience matter more than puzzle-solving prowess. But with time, I developed an intellectual curiosity about algorithms and decided to revisit the topic on my own terms.
+My goal in creating this learning path was simple - cram all the essential knowledge that forms the foundations of computer science and DSA into one structured, focused curriculum. Instead of saturating you with information, this path helps you reason your way through the world of software engineering. The pace is slow, the scope is deep, and the goal is to help you truly understand things - not only the how, but also the why behind them.
 
-Studying algorithms because I *wanted* to was a completely different experience. Instead of a rat race to become the best riddle-solver of them all, it became a slow-paced, thoughtful exploration. I encourage you to take a similar approach. The journey matters more than the destination.
+This journey is a mirror of my own personal curiosity and where it led me - it gradually builds one concept over another to help you understand the big picture.
 
-## The Problem with Grinding
+## What's Wrong with DSA?
 
-There is a prevalent belief that the path to algorithmic mastery is through sheer volume: solve a thousand problems and you will be ready for anything. This approach has its merits, but it also has a fundamental flaw. Memorizing solutions to individual problems does not teach you *how to think*. You end up with a mental library of tricks that only work when you recognize the exact problem you have seen before.
+**Algorithms & Data Structures** are perhaps the most universally hated aspect of software engineering. They are usually taught in a rigid, tedious, and rather uninteresting manner, in total isolation from practical reality. However, in my humble opinion, the topic itself isn't inherently boring or impractical. It's just that we approach it the wrong way.
 
-A better approach is to learn *patterns*. Most algorithmic problems are variations on a small set of core techniques. Once you internalize these patterns, new problems stop feeling like puzzles you have never seen. Instead, they become familiar challenges dressed in different clothing. You learn to recognize the shape of a problem and reach for the right tool.
+Most companies these days still use DSA as an easy way to filter out unprepared candidates. This is inherently wrong - but it is the harsh reality. As consequence, aspiring developers begin a slow *leetcode* grind, hoping that solving hundreds of problems can somehow give them an edge in technical interviews and help them land their dream job. This creates a vicious cycle - developers learn DSA not because they want to, but because it is required of them - and since learning something you don't want to learn is in general considered a chore, we begin to nurture a hatred towards the accursed topic.
 
-## Why Start with Fundamentals?
+However, there is a better way. Learning is much more pleasant when you approach it methodically and diligently, using your innate curiosity to fuel it rather than being compelled by the shape of current social norms. And as it turns out, DSA doesn't have to be as hard as it seems - at their core, all algorithm problems are based on certain patterns. If we can truly understand those patterns, we can solve any problem by simply recognizing which pattern it follows.
 
-Before diving into data structures and algorithms, we spend time understanding how computers actually work. This might seem like a detour, but it pays dividends. When you understand binary representation, you grasp why certain operations are fast. When you understand memory layout, you see why arrays have O(1) access but linked lists do not. When you understand the call stack, recursion stops feeling magical.
-
-Fundamentals transform algorithmic analysis from abstract notation into something tangible. "O(n) is slower than O(log n)" stops being a rule to memorize and becomes an obvious consequence of how the underlying operations work.
+This is the modern approach to learn DSA - and it is the route we will take on this path.
 
 ## The Path Ahead
 
-This learning journey is structured as a progression, where each section builds on the last.
+This learning journey is structured as a progression, where each section builds on the last. It is designed to be completed sequentially, but you may also skip around if you wish.
 
 ### Fundamentals
 
-We begin at the bottom, with the machine itself. How do computers represent data? How does memory work? What actually happens when your code runs? This foundation makes everything that follows more intuitive.
+Modern technology has advanced so far that we are able to write complex software without needing to know what a computer really is or how it works. However, there is a certain power in understanding how the software you write traverses all the layers of abstraction and is ultimately executed by the CPU as a set of simple instructions. Of course, you could spend years studying the internal workings of a computer - but for our needs, a deep dive into established computer science fundamentals will suffice.
+
+From binary, transistors and logic gates, through assembly, programming languages and OOP / functional programming paradigms, to algorithms and the Big O notation, this section covers everything you need to truly understand computers.
 
 ### Data Structures
 
-Next, we explore the building blocks for organizing information. Arrays, linked lists, trees, graphs... each structure has its own strengths and trade-offs. Understanding *why* a hash table offers O(1) lookups (and when it does not) is more valuable than memorizing the fact.
+Before starting to build problem solving skills, it is essential to have a solid grasp of data structures. Those are the tools that we have at our disposal - each works best for different types of problems. Learning to implement them, manipulate them, and use them in practice provides us with a solid foundation we can then build upon.
+
+This section examines the strengths & weaknesses of each data structure, discusses its low-level implementation, and provides easy practice problems to build a sort of "muscle memory" for handling them.
 
 ### Sorting Algorithms
 
-Sorting is a classic domain for studying algorithmic thinking. We examine different approaches, from simple quadratic algorithms to efficient divide-and-conquer strategies, always focusing on *why* each algorithm behaves the way it does.
+Sorting is the perfect starting point for studying algorithms. It teaches us algorithmic thinking and the Big O notation with a set of practical but moderately easy problems. This section is therefore sort of an appetizer - reinforcing what we've learned so far before we move to more complex material.
 
 ### Algorithm Patterns
 
-Finally, we arrive at the heart of problem-solving: recognizing and applying patterns. Binary search, two pointers, depth-first search, dynamic programming... these are not just algorithms, but ways of thinking. Each pattern is a lens through which entire categories of problems become approachable.
-
-## How to Use This Resource
-
-Take your time. Resist the urge to rush through topics or skip ahead to the "good stuff." The fundamentals are the good stuff; they just reveal their value slowly. When you encounter a concept that does not click immediately, sit with it. Return to earlier sections if needed. Understanding compounds over time.
-
-And remember: the goal is not to memorize algorithms, but to develop intuition. When you truly understand a pattern, you can reconstruct it from first principles. That is the kind of knowledge that lasts.
+Finally, we arrive at the heart of problem-solving: recognizing and applying patterns. Binary search, two pointers, depth-first search, dynamic programming... these are not just algorithms, but ways of thinking. Each pattern is a lens through which entire categories of problems become approachable. We will go through each pattern in great detail, providing plenty of practice problems to test your knowledge.

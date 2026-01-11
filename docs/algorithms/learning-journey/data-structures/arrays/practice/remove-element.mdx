@@ -1,0 +1,98 @@
+---
+title: Remove Element
+---
+
+## Problem Statement
+
+Given an array of integers and a target value, remove all occurrences of that value in-place and return the new length of the array.
+
+The order of remaining elements does not need to be preserved. You do not need to worry about elements beyond the new length.
+
+**Function Signature:**
+
+```javascript
+function removeElement(arr, val) {
+  // Your code here
+}
+```
+
+## Examples
+
+| Input | Value | Output | Array After |
+|-------|-------|--------|-------------|
+| `[3, 2, 2, 3]` | `3` | `2` | `[2, 2, ...]` |
+| `[0, 1, 2, 2, 3, 0, 4, 2]` | `2` | `5` | `[0, 1, 3, 0, 4, ...]` |
+| `[1]` | `1` | `0` | `[...]` |
+| `[1]` | `2` | `1` | `[1]` |
+
+## Constraints
+
+- Array length: 0 ≤ arr.length ≤ 100
+- Element values: 0 ≤ arr[i] ≤ 50
+- 0 ≤ val ≤ 100
+
+## Interactive Editor
+
+<PracticeEditor
+  problemId="arrays-remove-element"
+  functionName="removeElement"
+  starterCode={`function removeElement(arr, val) {
+  // Your code here
+
+}`}
+  solutionCode={`function removeElement(arr, val) {
+  let writeIndex = 0;
+
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] !== val) {
+      arr[writeIndex] = arr[i];
+      writeIndex++;
+    }
+  }
+
+  return writeIndex;
+}`}
+  testCases={[
+    { input: [[3, 2, 2, 3], 3], expected: 2, description: "Remove from both ends" },
+    { input: [[0, 1, 2, 2, 3, 0, 4, 2], 2], expected: 5, description: "Multiple occurrences" },
+    { input: [[1], 1], expected: 0, description: "Remove only element" },
+    { input: [[1], 2], expected: 1, description: "Value not in array" },
+    { input: [[], 1], expected: 0, description: "Empty array" },
+    { input: [[2, 2, 2], 2], expected: 0, description: "All elements removed" },
+  ]}
+/>
+
+## Hints
+
+<details>
+<summary>Hint 1: Two Pointers</summary>
+
+Use a "write pointer" to track where the next non-target element should go. Copy non-target elements to this position as you iterate.
+
+</details>
+
+## Solution
+
+<details>
+<summary>View Solution Explanation</summary>
+
+```javascript
+function removeElement(arr, val) {
+  let writeIndex = 0;
+
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] !== val) {
+      arr[writeIndex] = arr[i];
+      writeIndex++;
+    }
+  }
+
+  return writeIndex;
+}
+```
+
+Iterate through the array. When you find an element that's not the target, copy it to `writeIndex` and increment. The final `writeIndex` is the new length.
+
+**Complexity:** O(n) time, O(1) space.
+
+</details>
