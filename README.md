@@ -16,6 +16,7 @@ A structured learning path that emphasizes **patterns over memorization**. Inste
 
 - **Learning Journey** - A progressive path from hardware fundamentals through data structures to algorithm patterns
 - **Algorithm Bible** - Deep dives into individual algorithms for reference
+- **Interactive Practice** - Hands-on coding exercises with an embedded editor, test runner, and solutions
 
 ### Tech Stack
 

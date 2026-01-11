@@ -21,7 +21,13 @@ waypoints/
 │   └── journal/                   # Free-form articles
 ├── sidebars.js                    # Sidebar configuration (manual ordering)
 ├── docusaurus.config.js           # Site configuration
-└── src/css/custom.css             # Custom styles
+├── src/
+│   ├── css/custom.css             # Custom styles
+│   ├── components/                # React components
+│   │   └── PracticeEditor/        # Interactive code editor for practice problems
+│   └── theme/
+│       └── MDXComponents.tsx      # Global MDX component registration
+└── datastructures.md              # Planning doc for data structures section
 ```
 
 ## Docusaurus Configuration
@@ -183,3 +189,77 @@ npm run clear     # Clear cache (.docusaurus directory)
 ```
 
 Always run `npm run build` before committing to catch broken links and invalid sidebar references.
+
+---
+
+## Interactive Practice Problems
+
+Practice problem files use the `PracticeEditor` component for interactive code editing and test validation.
+
+### File Extension Requirement
+
+Practice problem files **must use `.mdx` extension** (not `.md`) because they contain JSX. The Docusaurus config uses `markdown.format: 'detect'`, which only processes JSX in `.mdx` files.
+
+### Using the PracticeEditor Component
+
+The component is globally available in MDX files. Basic usage:
+
+```jsx
+<PracticeEditor
+  problemId="unique-problem-id"
+  functionName="functionToTest"
+  starterCode={`function functionToTest(input) {
+  // Your code here
+}`}
+  solutionCode={`function functionToTest(input) {
+  return input * 2;
+}`}
+  testCases={[
+    { input: [5], expected: 10, description: "Basic case" },
+    { input: [0], expected: 0, description: "Zero input" },
+  ]}
+/>
+```
+
+### Props
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `problemId` | string | Unique identifier for the problem |
+| `functionName` | string | Name of the function to test |
+| `starterCode` | string | Initial code shown in the editor |
+| `solutionCode` | string | Solution code revealed via button |
+| `testCases` | array | Array of test case objects |
+
+### Test Case Format
+
+```javascript
+{
+  input: [arg1, arg2, ...],  // Arguments passed to the function
+  expected: returnValue,     // Expected return value
+  description: "Test name"   // Optional description shown in results
+}
+```
+
+### Component Features
+
+- Run tests against user code
+- Reset to starter code
+- Reveal solution (with confirmation prompt)
+- Show/hide test case details
+- Console output capture for debugging
+- Dark mode support
+
+### Component Location
+
+```
+src/components/PracticeEditor/
+├── index.tsx          # Main component
+├── types.ts           # TypeScript interfaces
+├── TestRunner.ts      # Test execution logic
+└── styles.module.css  # Component styles (edit for theming)
+```
+
+### Example Problem Structure
+
+See `docs/algorithms/learning-journey/data-structures/arrays/practice/find-maximum.mdx` for a complete example.

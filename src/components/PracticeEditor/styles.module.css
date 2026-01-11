@@ -1,0 +1,239 @@
+/**
+ * Styles for the PracticeEditor component.
+ * Uses CSS Modules for scoped styling.
+ * Leverages Docusaurus CSS variables for consistent theming.
+ */
+
+.practiceEditor {
+  margin: 1.5rem 0;
+  font-family: var(--ifm-font-family-base);
+}
+
+.container {
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: var(--ifm-code-border-radius);
+  overflow: hidden;
+  background: var(--ifm-background-color);
+}
+
+/* Editor Wrapper */
+.editorWrapper {
+  border-bottom: 1px solid var(--ifm-color-emphasis-300);
+}
+
+.editorWrapper :global(.sp-code-editor) {
+  font-size: 14px;
+}
+
+/* Action Buttons */
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: var(--ifm-color-emphasis-100);
+  border-bottom: 1px solid var(--ifm-color-emphasis-300);
+}
+
+.button {
+  padding: 0.5rem 1rem;
+  border-radius: var(--ifm-button-border-radius);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s, opacity 0.2s;
+  border: none;
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.buttonPrimary {
+  background: var(--ifm-color-primary);
+  color: white;
+}
+
+.buttonPrimary:hover:not(:disabled) {
+  background: var(--ifm-color-primary-dark);
+}
+
+.buttonSecondary {
+  background: var(--ifm-color-emphasis-200);
+  color: var(--ifm-color-content);
+}
+
+.buttonSecondary:hover:not(:disabled) {
+  background: var(--ifm-color-emphasis-300);
+}
+
+/* Results Section */
+.resultsSection {
+  padding: 0.75rem;
+}
+
+.resultsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.testCount {
+  font-weight: 600;
+  color: var(--ifm-color-content);
+}
+
+.toggleButton {
+  background: none;
+  border: none;
+  color: var(--ifm-color-primary);
+  cursor: pointer;
+  font-size: 0.875rem;
+  padding: 0.25rem 0.5rem;
+}
+
+.toggleButton:hover {
+  text-decoration: underline;
+}
+
+/* Test Results */
+.testResults {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.testResult {
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--ifm-code-border-radius);
+  border-left: 3px solid;
+}
+
+.testPassed {
+  background: rgba(0, 164, 0, 0.08);
+  border-left-color: #00a400;
+}
+
+.testFailed {
+  background: rgba(220, 38, 38, 0.08);
+  border-left-color: #dc2626;
+}
+
+.testResultHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.testIcon {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.testPassed .testIcon {
+  color: #00a400;
+}
+
+.testFailed .testIcon {
+  color: #dc2626;
+}
+
+.testName {
+  font-weight: 500;
+  color: var(--ifm-color-content);
+}
+
+.testDetails {
+  margin-top: 0.5rem;
+  padding-left: 1.5rem;
+  font-size: 0.875rem;
+}
+
+.testDetail {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+  align-items: baseline;
+}
+
+.testLabel {
+  color: var(--ifm-color-content-secondary);
+  min-width: 60px;
+}
+
+.testDetail code {
+  background: var(--ifm-color-emphasis-200);
+  padding: 0.125rem 0.375rem;
+  border-radius: 3px;
+  font-size: 0.8125rem;
+}
+
+.actualValue {
+  color: #dc2626;
+}
+
+/* Test Cases Preview (before running) */
+.testCasesPreview {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.testCasePreview {
+  padding: 0.5rem 0.75rem;
+  background: var(--ifm-color-emphasis-100);
+  border-radius: var(--ifm-code-border-radius);
+}
+
+.testCasePreview .testName {
+  margin-bottom: 0.5rem;
+}
+
+.testCasePreview .testDetail {
+  font-size: 0.875rem;
+}
+
+/* Console Output */
+.consoleSection {
+  border-top: 1px solid var(--ifm-color-emphasis-300);
+}
+
+.consoleHeader {
+  padding: 0.5rem 0.75rem;
+  background: var(--ifm-color-emphasis-200);
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--ifm-color-content);
+}
+
+.consoleOutput {
+  padding: 0.75rem;
+  background: #1e1e1e;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.8125rem;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.consoleLine {
+  color: #d4d4d4;
+  line-height: 1.5;
+}
+
+.consoleLine:not(:last-child) {
+  margin-bottom: 0.25rem;
+}
+
+/* Dark mode adjustments */
+:global([data-theme='dark']) .testPassed {
+  background: rgba(0, 164, 0, 0.15);
+}
+
+:global([data-theme='dark']) .testFailed {
+  background: rgba(220, 38, 38, 0.15);
+}
+
+:global([data-theme='dark']) .testDetail code {
+  background: var(--ifm-color-emphasis-300);
+}

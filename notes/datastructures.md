@@ -86,7 +86,7 @@ data-structures/
 │   ├── operations.md                 # Common operations with complexity
 │   └── practice/
 │       ├── index.md                  # Problem list with difficulty tags
-│       ├── find-maximum.md           # Individual practice problems
+│       ├── find-maximum.mdx          # Individual practice problems (use .mdx for JSX support)
 │       ├── remove-element.md
 │       ├── merge-sorted-arrays.md
 │       └── rotate-array.md
@@ -806,17 +806,17 @@ When converting a data structure from placeholder to full content:
 
 ## File Naming Conventions
 
-- Use kebab-case for all file names: `merge-sorted-arrays.md`
+- Use kebab-case for all file names: `merge-sorted-arrays.mdx`
 - Practice problem files should match their slug in the problem list
 - Keep names concise but descriptive
 
-## Next Steps
+:::warning MDX File Extension
+Practice problem files that use the `<PracticeEditor>` component **must use the `.mdx` extension**, not `.md`. This is because Docusaurus only processes JSX in `.mdx` files when using `markdown.format: 'detect'`.
 
-1. Set up the Sandpack-based `<PracticeEditor>` component
-2. Create the data-structures/index.md section overview
-3. Build out the Arrays section as the first complete example
-4. Use Arrays as a template to validate the structure before proceeding
+- Theory files (index.md, internals.md, operations.md) → `.md` is fine
+- Practice problem files with interactive editor → **must be `.mdx`**
+:::
 
 ---
 
-*Last updated: January 2025*
+*Last updated: January 2026*
