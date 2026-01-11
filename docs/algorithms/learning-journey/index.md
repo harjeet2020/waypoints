@@ -5,7 +5,7 @@ Before the dawn of the information era, knowledge was scarce, and always came at
 
 My goal in creating this learning path was simple - cram all the essential knowledge that forms the foundations of computer science and DSA into one structured, focused curriculum. Instead of saturating you with information, this path helps you reason your way through the world of software engineering. The pace is slow, the scope is deep, and the goal is to help you truly understand things - not only the how, but also the why behind them.
 
-This journey is a mirror of my own personal curiosity and where it led me - it gradually builds one concept over another to help you understand the big picture.
+This journey is a mirror of my own personal curiosity and where it led me. It gradually builds one concept over another to help you understand the big picture.
 
 ## What's Wrong with DSA?
 
@@ -35,7 +35,7 @@ This section examines the strengths & weaknesses of each data structure, discuss
 
 ### Sorting Algorithms
 
-Sorting is the perfect starting point for studying algorithms. It teaches us algorithmic thinking and the Big O notation with a set of practical but moderately easy problems. This section is therefore sort of an appetizer - reinforcing what we've learned so far before we move to more complex material.
+Sorting is the perfect starting point for studying algorithms. It teaches us algorithmic thinking and the Big O notation with a set of practical, non-trivial but moderately easy problems. This section is therefore sort of an appetizer - a gentle introduction to the world of algorithms.
 
 ### Algorithm Patterns
 

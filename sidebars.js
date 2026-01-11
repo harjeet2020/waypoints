@@ -76,6 +76,7 @@ const sidebars = {
       type: 'category',
       label: 'Data Structures',
       collapsed: false,
+      link: { type: 'doc', id: 'algorithms/learning-journey/data-structures/index' },
       items: [
         {
           type: 'category',

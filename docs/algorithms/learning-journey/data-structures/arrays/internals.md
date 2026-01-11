@@ -1,10 +1,9 @@
 ---
 title: Memory & Internals
 ---
-
 ## How Arrays Work in Memory
 
-An array is, at its core, a contiguous block of memory. When you create an array of five integers, the computer reserves five adjacent memory slots, one right after another with no gaps between them.
+An array is, at its core, a contiguous block of memory. When you create an array of five integers, the computer reserves five adjacent memory slots, one right after another with no gaps between them. Memory slot size is fixed within each array, and depends on the type of data the array stores.
 
 ```
 Memory Address:   1000     1004     1008     1012     1016
@@ -119,7 +118,7 @@ With doubling, most insertions are O(1), but occasionally you pay O(n) to copy e
 Consider inserting n elements into an initially empty array. The total copying work is:
 
 ```
-1 + 2 + 4 + 8 + ... + n/2 + n ≈ 2n
+1 + 2 + 4 + 8 + ... + n/2 + n ≈ 2n (geometric series)
 ```
 
 We do about 2n total copies for n insertions. That's O(n) total work, or **O(1) per insertion on average**. This is called amortized O(1).

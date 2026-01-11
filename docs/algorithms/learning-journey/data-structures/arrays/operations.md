@@ -1,7 +1,6 @@
 ---
 title: Array Operations
 ---
-
 ## The Building Blocks
 
 Every algorithm that works with arrays is built from a small set of fundamental operations: reading, writing, inserting, deleting, and traversing. Understanding these operations and their performance characteristics is essential for writing efficient code and recognizing when an array is the right tool for the job.
@@ -104,31 +103,6 @@ function binarySearch(arr, target) {
 :::warning Sorted Requirement
 Binary search on an unsorted array produces garbage results. Always ensure the array is sorted first, or use linear search.
 :::
-
-#### Built-in Search Methods
-
-JavaScript provides several convenient search methods:
-
-```javascript
-const fruits = ['apple', 'banana', 'cherry', 'date'];
-
-// indexOf - returns index or -1
-fruits.indexOf('cherry');     // 2
-fruits.indexOf('grape');      // -1
-
-// includes - returns boolean
-fruits.includes('banana');    // true
-fruits.includes('grape');     // false
-
-// find - returns first element matching predicate
-const numbers = [1, 5, 10, 15, 20];
-numbers.find(n => n > 8);     // 10
-
-// findIndex - returns index of first match
-numbers.findIndex(n => n > 8); // 2
-```
-
-All of these are O(n) under the hood; they use linear search. There's no built-in binary search in JavaScript's standard library.
 
 ## Writing Operations
 
@@ -252,13 +226,9 @@ if (index !== -1) {
 
 **Time Complexity:** O(n) for search + O(n) for shift = O(n) overall.
 
-## Traversal Patterns
+## Traversal
 
-Iterating through an array is one of the most common operations in programming. JavaScript offers several approaches, each with tradeoffs.
-
-### Basic For Loop
-
-The classic approach, with full control over the index.
+Iterating through an array is one of the most common operations in programming. The classic approach uses a counter variable to access each index in sequence.
 
 ```javascript
 const arr = [10, 20, 30, 40, 50];
@@ -268,14 +238,65 @@ for (let i = 0; i < arr.length; i++) {
 }
 ```
 
-**When to use:**
-- You need the index for calculations
-- You need to iterate in reverse or skip elements
-- You need to break out early based on complex conditions
+This pattern gives you full control: you can iterate in reverse, skip elements, or break out early based on conditions. The loop visits each element exactly once, making traversal O(n).
 
-### For...of Loop
+Most languages also provide higher-level iteration constructs (like JavaScript's `for...of` and `forEach`). These are covered in the [JavaScript-specific section](#iteration-methods) below.
 
-Cleaner syntax when you only need the values.
+## Operations Summary
+
+| Operation | Method | Time | Space | Notes |
+|-----------|--------|------|-------|-------|
+| Access | `arr[i]` | O(1) | O(1) | Direct calculation |
+| Update | `arr[i] = x` | O(1) | O(1) | Direct assignment |
+| Search (unsorted) | `indexOf`, `find` | O(n) | O(1) | Linear scan |
+| Search (sorted) | Binary search | O(log n) | O(1) | Must be sorted |
+| Insert at end | `push` | O(1)* | O(1) | *Amortized |
+| Insert at start | `unshift` | O(n) | O(1) | Shifts all elements |
+| Insert at index | `splice` | O(n) | O(1) | Shifts elements after |
+| Delete from end | `pop` | O(1) | O(1) | No shifting |
+| Delete from start | `shift` | O(n) | O(1) | Shifts all elements |
+| Delete at index | `splice` | O(n) | O(1) | Shifts elements after |
+| Traverse | `for`, `forEach` | O(n) | O(1) | Visits each element |
+| Map | `map` | O(n) | O(n) | New array |
+| Filter | `filter` | O(n) | O(n) | New array |
+| Reduce | `reduce` | O(n) | O(1)* | *Depends on accumulator |
+
+---
+
+## JavaScript-Specific Features
+
+The concepts above apply universally. This section covers JavaScript's built-in methods and language-specific behavior.
+
+### Built-in Search Methods
+
+JavaScript provides convenient wrappers around linear search:
+
+```javascript
+const fruits = ['apple', 'banana', 'cherry', 'date'];
+
+// indexOf - returns index or -1
+fruits.indexOf('cherry');     // 2
+fruits.indexOf('grape');      // -1
+
+// includes - returns boolean
+fruits.includes('banana');    // true
+fruits.includes('grape');     // false
+
+// find - returns first element matching predicate
+const numbers = [1, 5, 10, 15, 20];
+numbers.find(n => n > 8);     // 10
+
+// findIndex - returns index of first match
+numbers.findIndex(n => n > 8); // 2
+```
+
+All of these are O(n) under the hood. There's no built-in binary search in JavaScript's standard library.
+
+### Iteration Methods
+
+Beyond the basic for loop, JavaScript offers several iteration patterns.
+
+**For...of Loop:** Cleaner syntax when you only need values.
 
 ```javascript
 const arr = [10, 20, 30, 40, 50];
@@ -285,14 +306,7 @@ for (const value of arr) {
 }
 ```
 
-**When to use:**
-- You only need values, not indices
-- You want cleaner, more readable code
-- You might need to `break` or `continue`
-
-### forEach Method
-
-Functional style, passes each element to a callback.
+**forEach Method:** Functional style, passes each element to a callback.
 
 ```javascript
 const arr = [10, 20, 30, 40, 50];
@@ -301,11 +315,6 @@ arr.forEach((value, index) => {
   console.log(`Index ${index}: ${value}`);
 });
 ```
-
-**When to use:**
-- You want functional style
-- You don't need to break out early (forEach ignores `return`)
-- You need both value and index without manual tracking
 
 :::tip Breaking Out Early
 `forEach` cannot be stopped early. If you need to exit the loop before completion, use a regular `for` loop or `for...of` with `break`. Alternatively, `some()` and `every()` can short-circuit based on a condition.
@@ -320,13 +329,11 @@ arr.some(value => {
 ```
 :::
 
-## Transformation Operations
+### Transformation Methods
 
 JavaScript arrays have powerful built-in methods for transforming data. These follow a functional programming style: they don't modify the original array but return a new one.
 
-### map
-
-Transform each element into something new.
+**map:** Transform each element into something new.
 
 ```javascript
 const numbers = [1, 2, 3, 4, 5];
@@ -335,12 +342,7 @@ const doubled = numbers.map(n => n * 2);
 // numbers unchanged
 ```
 
-**Time Complexity:** O(n)
-**Space Complexity:** O(n) - creates a new array
-
-### filter
-
-Keep only elements that match a condition.
+**filter:** Keep only elements that match a condition.
 
 ```javascript
 const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -348,12 +350,7 @@ const evens = numbers.filter(n => n % 2 === 0);
 // evens = [2, 4, 6, 8, 10]
 ```
 
-**Time Complexity:** O(n)
-**Space Complexity:** O(n) worst case (if all elements pass)
-
-### reduce
-
-Combine all elements into a single value.
+**reduce:** Combine all elements into a single value.
 
 ```javascript
 const numbers = [1, 2, 3, 4, 5];
@@ -361,12 +358,9 @@ const sum = numbers.reduce((acc, n) => acc + n, 0);
 // sum = 15
 ```
 
-**Time Complexity:** O(n)
-**Space Complexity:** O(1) for simple reductions
+All three are O(n) time complexity. `map` and `filter` create new arrays (O(n) space), while `reduce` typically uses O(1) space for simple reductions.
 
-### Chaining Considerations
-
-These methods can be chained for expressive code:
+**Chaining Considerations:** These methods can be chained for expressive code:
 
 ```javascript
 const transactions = [
@@ -391,28 +385,9 @@ const totalCredits = transactions.reduce((sum, t) => {
 }, 0);
 ```
 
-## Operations Summary
+### Common Gotchas
 
-| Operation | Method | Time | Space | Notes |
-|-----------|--------|------|-------|-------|
-| Access | `arr[i]` | O(1) | O(1) | Direct calculation |
-| Update | `arr[i] = x` | O(1) | O(1) | Direct assignment |
-| Search (unsorted) | `indexOf`, `find` | O(n) | O(1) | Linear scan |
-| Search (sorted) | Binary search | O(log n) | O(1) | Must be sorted |
-| Insert at end | `push` | O(1)* | O(1) | *Amortized |
-| Insert at start | `unshift` | O(n) | O(1) | Shifts all elements |
-| Insert at index | `splice` | O(n) | O(1) | Shifts elements after |
-| Delete from end | `pop` | O(1) | O(1) | No shifting |
-| Delete from start | `shift` | O(n) | O(1) | Shifts all elements |
-| Delete at index | `splice` | O(n) | O(1) | Shifts elements after |
-| Traverse | `for`, `forEach` | O(n) | O(1) | Visits each element |
-| Map | `map` | O(n) | O(n) | New array |
-| Filter | `filter` | O(n) | O(n) | New array |
-| Reduce | `reduce` | O(n) | O(1)* | *Depends on accumulator |
-
-## Common Gotchas
-
-### Mutating vs Non-Mutating Methods
+#### Mutating vs Non-Mutating Methods
 
 Some methods change the original array, others return a new one. This is a common source of bugs.
 
@@ -440,7 +415,7 @@ const sorted2 = [...arr2].sort();
 console.log(arr2);    // [3, 1, 2] - unchanged
 ```
 
-### Off-by-One Errors
+#### Off-by-One Errors
 
 The classic bug. Arrays are zero-indexed, so the last valid index is `length - 1`.
 
@@ -458,7 +433,7 @@ for (let i = 0; i < arr.length; i++) {
 }
 ```
 
-### Modifying While Iterating
+#### Modifying While Iterating
 
 Changing an array's length while iterating over it leads to unpredictable behavior.
 
@@ -485,7 +460,7 @@ const arr3 = [1, 2, 3, 4, 5];
 const odds = arr3.filter(n => n % 2 !== 0);
 ```
 
-### Empty Slots vs Undefined
+#### Empty Slots vs Undefined
 
 Sparse arrays have "empty slots" that behave differently from `undefined`.
 
