@@ -14,10 +14,9 @@ waypoints/
 │   │   │   ├── sorting/           # Sorting algorithms
 │   │   │   └── patterns/          # Core Problem Patterns (Deep Journey)
 │   │   └── reference/             # Algorithm Bible (reference)
-│   ├── stack/                     # Language/framework technical exploration
+│   ├── technical-knowledge/       # Deep dives into specific technologies
 │   │   ├── javascript/
-│   │   ├── react/
-│   │   └── ...
+│   │   └── typescript/
 │   └── journal/                   # Free-form articles
 ├── sidebars.js                    # Sidebar configuration (manual ordering)
 ├── docusaurus.config.js           # Site configuration

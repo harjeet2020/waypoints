@@ -220,79 +220,24 @@ const sidebars = {
   ],
 
   /**
-   * Stack - CSS
-   */
-  cssSidebar: [
-    {
-      type: 'doc',
-      id: 'stack/css/index',
-      label: 'CSS Overview',
-    },
-  ],
-
-  /**
-   * Stack - JavaScript
+   * Technical Knowledge - JavaScript
    */
   javascriptSidebar: [
     {
       type: 'doc',
-      id: 'stack/javascript/index',
+      id: 'technical-knowledge/javascript/index',
       label: 'JavaScript Overview',
     },
   ],
 
   /**
-   * Stack - React
+   * Technical Knowledge - TypeScript
    */
-  reactSidebar: [
+  typescriptSidebar: [
     {
       type: 'doc',
-      id: 'stack/react/index',
-      label: 'React Overview',
-    },
-  ],
-
-  /**
-   * Stack - React Native
-   */
-  reactNativeSidebar: [
-    {
-      type: 'doc',
-      id: 'stack/react-native/index',
-      label: 'React Native Overview',
-    },
-  ],
-
-  /**
-   * Stack - Node.js
-   */
-  nodeSidebar: [
-    {
-      type: 'doc',
-      id: 'stack/node/index',
-      label: 'Node.js Overview',
-    },
-  ],
-
-  /**
-   * Stack - MongoDB
-   */
-  mongodbSidebar: [
-    {
-      type: 'doc',
-      id: 'stack/mongodb/index',
-      label: 'MongoDB Overview',
-    },
-  ],
-
-  /**
-   * Stack - PostgreSQL
-   */
-  postgresqlSidebar: [
-    {
-      type: 'doc',
-      id: 'stack/postgresql/index',
-      label: 'PostgreSQL Overview',
+      id: 'technical-knowledge/typescript/index',
+      label: 'TypeScript Overview',
     },
   ],
 

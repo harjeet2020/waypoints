@@ -102,17 +102,12 @@ const config = {
               },
             ],
           },
-          // Stack dropdown (languages, frameworks, databases)
+          // Technical Knowledge dropdown (language deep dives)
           {
             type: 'dropdown',
-            label: 'Stack',
+            label: 'Technical Knowledge',
             position: 'left',
             items: [
-              {
-                type: 'docSidebar',
-                sidebarId: 'cssSidebar',
-                label: 'CSS',
-              },
               {
                 type: 'docSidebar',
                 sidebarId: 'javascriptSidebar',
@@ -120,28 +115,8 @@ const config = {
               },
               {
                 type: 'docSidebar',
-                sidebarId: 'reactSidebar',
-                label: 'React',
-              },
-              {
-                type: 'docSidebar',
-                sidebarId: 'reactNativeSidebar',
-                label: 'React Native',
-              },
-              {
-                type: 'docSidebar',
-                sidebarId: 'nodeSidebar',
-                label: 'Node.js',
-              },
-              {
-                type: 'docSidebar',
-                sidebarId: 'mongodbSidebar',
-                label: 'MongoDB',
-              },
-              {
-                type: 'docSidebar',
-                sidebarId: 'postgresqlSidebar',
-                label: 'PostgreSQL',
+                sidebarId: 'typescriptSidebar',
+                label: 'TypeScript',
               },
             ],
           },
@@ -179,35 +154,15 @@ const config = {
             ],
           },
           {
-            title: 'Stack',
+            title: 'Technical Knowledge',
             items: [
               {
-                label: 'CSS',
-                to: '/stack/css',
-              },
-              {
                 label: 'JavaScript',
-                to: '/stack/javascript',
+                to: '/technical-knowledge/javascript',
               },
               {
-                label: 'React',
-                to: '/stack/react',
-              },
-              {
-                label: 'React Native',
-                to: '/stack/react-native',
-              },
-              {
-                label: 'Node.js',
-                to: '/stack/node',
-              },
-              {
-                label: 'MongoDB',
-                to: '/stack/mongodb',
-              },
-              {
-                label: 'PostgreSQL',
-                to: '/stack/postgresql',
+                label: 'TypeScript',
+                to: '/technical-knowledge/typescript',
               },
             ],
           },

@@ -24,18 +24,12 @@ Studying algorithms & data structures because *I* wanted to was a completely dif
 - **[Learning Journey](/algorithms/learning-journey)** - A structured learning path that takes you through the fundamental patterns that appear in the vast majority of coding problems. The map I wish I'd had when I started.
 - **[Algorithm Bible](/algorithms/reference)** - Deep dives into individual algorithms, meant as a reference rather than learning material.
 
-### Tech Stack
+### Technical Knowledge
 
-Documentation explains syntax well - but it is still somewhat lacking when it comes to building conceptual understanding. To truly understand a language or framework, you must dig through the layers of abstraction and see how things work under the hood. This section documents my attempts to do just that - strip away the mystery, asking *why* for every *how*.
+Documentation explains syntax well, but it is still somewhat lacking when it comes to building conceptual understanding. To truly understand a language or framework, you must dig through the layers of abstraction and see how things work under the hood. This section documents my attempts to do just that: strip away the mystery, asking *why* for every *how*.
 
-Here is a list of languages / frameworks currently covered:
-
-| Frontend | Backend | Data |
-|----------|---------|------|
-| [CSS](/stack/css) | [Node.js](/stack/node) | [MongoDB](/stack/mongodb) |
-| [JavaScript](/stack/javascript) | | [PostgreSQL](/stack/postgresql) |
-| [React](/stack/react) | | |
-| [React Native](/stack/react-native) | | |
+- **[JavaScript](/technical-knowledge/javascript)** - A deep dive into how JavaScript works under the hood, from types and coercion to the event loop and async patterns.
+- **[TypeScript](/technical-knowledge/typescript)** - Understanding the type system, how it maps to JavaScript, and the power of static analysis.
 
 ### Journal
 
