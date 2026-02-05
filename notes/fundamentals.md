@@ -25,10 +25,12 @@ The physical machine and how it represents data.
 | 2     | `binary-basics.md`           | Binary Basics                 |
 | 3     | `representing-numbers.md`    | Representing Numbers          |
 | 4     | `representing-text.md`       | Representing Text             |
-| 5     | `logic-gates.md`             | Logic Gates                   |
-| 6     | `combinational-circuits.md`  | Combinational Circuits        |
-| 7     | `sequential-circuits.md`     | Sequential Circuits & the CPU |
-| 8     | `io-and-interrupts.md`       | I/O & Interrupts              |
+| 5     | `electrical-circuits.md`     | Electrical Circuits           |
+| 6     | `logic-gates.md`             | Logic Gates                   |
+| 7     | `combinational-circuits.md`  | Combinational Circuits        |
+| 8     | `sequential-circuits.md`     | Sequential Circuits & the CPU |
+| 9     | `computer-architecture.md`   | Computer Architecture         |
+| 10    | `io-and-interrupts.md`       | I/O & Interrupts              |
 
 ### The Layers of Software
 
@@ -79,9 +81,11 @@ Update `sidebars.js` to include:
         'algorithms/learning-journey/fundamentals/binary-basics',
         'algorithms/learning-journey/fundamentals/representing-numbers',
         'algorithms/learning-journey/fundamentals/representing-text',
+        'algorithms/learning-journey/fundamentals/electrical-circuits',
         'algorithms/learning-journey/fundamentals/logic-gates',
         'algorithms/learning-journey/fundamentals/combinational-circuits',
         'algorithms/learning-journey/fundamentals/sequential-circuits',
+        'algorithms/learning-journey/fundamentals/computer-architecture',
         'algorithms/learning-journey/fundamentals/io-and-interrupts',
       ],
     },
@@ -197,6 +201,27 @@ Update `sidebars.js` to include:
 
 ---
 
+#### `electrical-circuits.md` — Electrical Circuits
+
+**Goal:** Provide a beginner-friendly introduction to electricity and circuits, building the physical foundation needed to understand logic gates.
+
+**Topics:**
+- What is electricity? (atoms, electrons, charge, conductors vs insulators)
+- The water analogy for building intuition
+- Voltage, current, and resistance as the three fundamental quantities
+- Ohm's Law (V = I × R) and qualitative understanding
+- Building circuits: complete loops, essential components
+- Series and parallel connections
+- Voltage drops and how they distribute based on resistance
+- The voltage divider pattern (the key to logic gates)
+- No current = no voltage drop (the critical insight)
+- Connected points equalize
+- Electric fields and how they act through insulators
+- Transistors as voltage-controlled variable resistors in circuits
+- Voltage as information between circuits
+
+---
+
 #### `logic-gates.md` — Boolean Algebra & Logic Gates
 
 **Goal:** Understand the mathematical foundation of digital logic and how transistors implement Boolean operations.
@@ -205,8 +230,6 @@ Update `sidebars.js` to include:
 - Boolean algebra: AND, OR, NOT, XOR
 - Truth tables and Boolean identities
 - De Morgan's laws
-- Circuits and voltage: the electrical foundation
-- How transistors work as voltage-controlled switches
 - Building gates from transistors: NOT, NAND, NOR
 - Universal gates (NAND, NOR)
 - Deriving AND, OR, XOR from NAND
@@ -253,6 +276,24 @@ Update `sidebars.js` to include:
 - The fetch-decode-execute cycle revisited
 - Why this matters: bitwise operations in programming
 - Practical applications of bitwise operations
+
+---
+
+#### `computer-architecture.md` — The Full System Picture
+
+**Goal:** Explain how the CPU, RAM, and storage physically connect and communicate, bridging the internal CPU understanding from sequential circuits with the high-level overview from article 1.
+
+**Topics:**
+- The Von Neumann architecture (shared memory for instructions and data)
+- Buses: address bus, data bus, control bus
+- How a memory read actually works (address → decoder → data)
+- Memory addressing and decoders (connecting back to combinational circuits)
+- Cache hierarchy revisited with hardware understanding
+  - Cache lines, tags, hits and misses explained mechanically
+  - Why spatial locality works (entire cache line loaded at once)
+- The full system diagram: CPU, buses, cache, RAM, storage
+- Speed/capacity tradeoffs explained mechanically
+- Brief forward reference to I/O
 
 ---
 
@@ -690,11 +731,13 @@ Update `sidebars.js` to include:
 
 The order follows a **bottom-up approach**, organized into three categories:
 
-1. **Hardware Foundations** (8 files): Establishes *why* things work the way they do
+1. **Hardware Foundations** (10 files): Establishes *why* things work the way they do
    - Physical hardware (CPU, RAM, storage)
    - Binary representation and why computers use it
    - How numbers and text are encoded
+   - Electrical circuits and how voltage/current/resistance govern behavior
    - Logic gates, combinational circuits, and sequential circuits
+   - Computer architecture: buses, memory addressing, and cache
    - How the CPU communicates with external devices
 
 2. **The Layers of Software** (11 files): Bridges hardware to high-level programming
@@ -727,9 +770,11 @@ This way, when readers reach Big O notation, they already understand *why* certa
 | `binary-basics.md` | Complete | Split from original binary-and-data.md |
 | `representing-numbers.md` | Complete | Split from original binary-and-data.md |
 | `representing-text.md` | Complete | Split from original binary-and-data.md |
-| `logic-gates.md` | Complete | Split into 3 articles |
+| `electrical-circuits.md` | Complete | Extracted from logic-gates.md and expanded |
+| `logic-gates.md` | Complete | Circuits section moved to electrical-circuits.md |
 | `combinational-circuits.md` | Complete | Split from original logic-gates.md |
 | `sequential-circuits.md` | Complete | Split from original logic-gates.md |
+| `computer-architecture.md` | Not started | New article |
 | `io-and-interrupts.md` | Not started | New article |
 
 ### The Layers of Software

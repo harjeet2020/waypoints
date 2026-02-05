@@ -16,9 +16,11 @@ We begin with the physical machine. You will learn how the CPU, RAM, and storage
 | Binary Basics | Why computers use binary. How transistors work. Converting between binary, decimal, and hexadecimal. |
 | Representing Numbers | Unsigned integers and two's complement for negatives. Floating-point numbers (IEEE 754) and their quirks. |
 | Representing Text | ASCII and its limitations. Unicode and UTF-8 encoding. Why string length can be surprising. |
+| Electrical Circuits | Voltage, current, and resistance. Ohm's Law. Voltage dividers. Electric fields and transistors in circuits. |
 | Logic Gates | Boolean algebra and truth tables. How transistors implement AND, OR, NOT, and XOR. Universal gates. |
 | Combinational Circuits | Building adders and comparators from gates. Multiplexers and how hardware makes decisions. |
 | Sequential Circuits & the CPU | Latches, flip-flops, and memory. Registers and the clock signal. The ALU and how the CPU executes instructions. |
+| Computer Architecture | Buses and how the CPU communicates with RAM. Memory addressing. Cache hierarchy. The full system picture. |
 | I/O & Interrupts | How the CPU talks to keyboards, displays, and storage. Polling vs interrupts. Direct Memory Access. |
 
 ## The Layers of Software

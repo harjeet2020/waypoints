@@ -1,15 +1,11 @@
 ---
 title: Logic Gates
 ---
-## From Representation to Computation
+## From Algebra to Gates
 
-In the previous articles, we explored how computers represent information. We learned that transistors act as tiny switches, encoding data as patterns of 1s and 0s. We discovered how these patterns can represent numbers (both integers and decimals) and text (through ASCII and Unicode). But representation alone is not computation.
+In the previous article, we explored the physics of electrical circuits: how voltage, current, and resistance govern circuit behavior, how voltage dividers determine the voltage at a midpoint, and how transistors act as voltage-controlled switches. We now have the physical foundation for digital electronics.
 
-Consider this: a book contains information, but a book cannot *think*. It cannot add two numbers, compare values, or make decisions. A computer can. The question that should now occupy our minds is: **how does a machine made of billions of tiny switches actually compute?**
-
-The answer lies in *logic gates*: simple circuits that perform logical operations on binary inputs. From these humble building blocks, we can construct circuits that add, subtract, compare, and ultimately execute any computation imaginable.
-
-In this article, we will lay the foundations for understanding **logic gates** by exploring *boolean algebra* and learning more about *electrical circuits*. This will enable us to understand how a logic gate truly works.
+This article provides the *mathematical* foundation: **Boolean algebra**, the system of logic that underlies all digital computation. We will then bring math and physics together by building **logic gates**: circuits that implement Boolean operations using the transistors and voltage dividers we now understand.
 
 In the next article, we will learn about **combinational circuits**: how we can combine gates to perform arithmetic, comparison, and selection. Finally, the following article will discuss **sequential circuits and the CPU**, which will explain how computers are able to execute instructions like loops or if statements.
 
@@ -156,167 +152,7 @@ The columns for `NOT (A AND B)` and `(NOT A) OR (NOT B)` are identical, proving 
 Intuitively, De Morgan's laws capture a simple idea: "not both" is the same as "at least one is missing," and "not either" is the same as "both are missing." If it is not the case that you have both coffee AND tea, then you must be missing coffee OR missing tea (or both).
 :::
 
-With Boolean algebra in hand, we have the mathematical foundation for logic. But mathematics alone cannot compute; we need physical devices that embody these logical operations. To understand how transistors implement Boolean logic, we must first understand how electrical circuits behave.
-
-## Circuits and Voltage
-
-Before we can build logic gates from transistors, we need to understand how electrical circuits work. Specifically, we need to grasp two key ideas: how voltage behaves when current flows (and when it does not), and how transistors control current without consuming it. These principles will explain exactly how a NOT gate produces inverted output, and why chains of logic gates can communicate efficiently.
-
-### The Water Analogy
-
-Electricity is the flow of charged particles (electrons) through a conductor. While the physics of electron movement is complex, we can build strong intuition using a water analogy that captures the essential behavior.
-
-Imagine a water system with a pump, pipes, and a water wheel:
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    THE WATER ANALOGY                            │
-│                                                                 │
-│                    ┌─────────────┐                              │
-│            ┌───────┤    PUMP     ├───────┐                      │
-│            │       │ (maintains  │       │                      │
-│            │       │  pressure)  │       │                      │
-│            │       └─────────────┘       │                      │
-│            │                             │                      │
-│            │  High pressure              │                      │
-│            ▼                             │                      │
-│      ┌───────────┐                       │                      │
-│      │   WHEEL   │ ← Water does work     │                      │
-│      │  (load)   │   here, pressure      │                      │
-│      └─────┬─────┘   drops               │                      │
-│            │                             │                      │
-│            │  Low pressure               │                      │
-│            └─────────────────────────────┘                      │
-│                                                                 │
-│   Pump = Power supply    Pressure = Voltage                     │
-│   Wheel = Resistor/Load  Water flow = Current                   │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
-
-The pump continuously raises water from low pressure to high pressure, maintaining a pressure difference. Water flows through the pipes, does work at the wheel (losing pressure in the process), and returns to the pump at low pressure. The cycle repeats.
-
-In an electrical circuit:
-- The **power supply** is the pump, maintaining a voltage difference (e.g., 5V above ground)
-- **Voltage** is the pressure - the potential energy that pushes charge through the circuit
-- **Current** is the flow rate - how much charge passes through per second
-- **Resistance** is anything that impedes flow (like a narrow pipe or a wheel)
-- **Ground** (0V) is the low-pressure return path
-
-### Circuits Need Complete Paths
-
-For current to flow, there must be a complete loop from the power supply, through the circuit, and back. If the path is broken anywhere, no current flows - just as water stops flowing if you block a pipe.
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│              COMPLETE VS BROKEN CIRCUIT                         │
-│                                                                 │
-│      Complete circuit:             Broken circuit:              │
-│                                                                 │
-│         +V ──────┐                    +V ──────┐                │
-│                  │                             │                │
-│                 ─┴─ (resistor)                ─┴─               │
-│                  │                             │                │
-│                  ▼                             ╳  (break)       │
-│         GND ◄────┘                             │                │
-│                                                                 │
-│      Current flows                  No current flows            │
-│      (complete loop)                (no complete loop)          │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
-
-This is crucial: **voltage can exist without current, but current requires a complete path.** The power supply maintains 5V at its positive terminal regardless of whether anything is connected. That voltage is a potential - it *could* push current if given a path.
-
-### Voltage Drops
-
-When current flows through a component with resistance, the voltage is higher on one side than the other. This difference is called a **voltage drop**. The energy that charges lose crossing the resistance is converted to heat (or useful work, in the case of a motor or light bulb).
-
-The key insight for understanding logic gates: **if no current flows, there is no voltage drop.** Both ends of a resistor sit at the same voltage when no current passes through. Conversely, when current does flow, the voltage drops are distributed across the components in the circuit based on their relative resistances. Higher resistance means a larger share of the voltage drop.
-
-### Connected Points Equalize
-
-Here is a principle that will be essential for understanding logic gates: **connected points equalize to the same voltage when no current flows between them.**
-
-Imagine two water tanks connected by a pipe:
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│              CONNECTED TANKS EQUALIZE                           │
-│                                                                 │
-│   ┌───────────┐           ┌───────────┐                        │
-│   │ ~~~~~~~~~ │───────────│ ~~~~~~~~~ │                        │
-│   │ ~~~~~~~~~ │   pipe    │ ~~~~~~~~~ │                        │
-│   │ ~~~~~~~~~ │           │ ~~~~~~~~~ │                        │
-│   └───────────┘           └───────────┘                        │
-│                                                                 │
-│   If no water is flowing, the levels must be equal.            │
-│   If they were unequal, water would flow until they matched.   │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
-
-If the water levels were different, the pressure difference would cause water to flow from the higher tank to the lower one until they equalized. The only way for flow to be zero is if the levels are already the same.
-
-The same applies to voltage. If two points are connected (even through a resistor) and no current flows, they must be at the same voltage. If they were different, current would flow until they equalized.
-
-### How Transistors Use Voltage Without Current
-
-In the binary basics article, we learned that a MOSFET transistor has three terminals: source, drain, and gate. Current flows between source and drain when the gate "opens" the channel. But how does the gate control this without current flowing into it?
-
-The gate terminal is separated from the channel by a thin insulating layer of oxide. No current can flow through this insulation. Instead, the gate works through **electric fields**.
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                  MOSFET GATE OPERATION                          │
-│                                                                 │
-│                      Gate voltage                               │
-│                          │                                      │
-│                          ▼                                      │
-│                 ┌─────────────────┐                             │
-│                 │   Metal Gate    │                             │
-│                 ├─────────────────┤                             │
-│                 │ Oxide (insulator)│ ← No current crosses       │
-│                 ├─────────────────┤                             │
-│                 │    Channel      │ ← But electric field does   │
-│                 └─────────────────┘                             │
-│                                                                 │
-│   Gate at 0V:                    Gate at 5V:                    │
-│   No electric field              Electric field penetrates      │
-│   Channel not conductive         Channel becomes conductive     │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
-
-When voltage is applied to the gate, it creates an electric field that penetrates through the oxide and affects the semiconductor channel below. This field attracts or repels charges in the channel, transforming it from an insulator into a conductor (or vice versa). The channel opens or closes, controlling current flow between source and drain - all without any current entering the gate itself.
-
-This has profound implications. To "read" a voltage, a transistor gate does not need to consume current. It simply responds to the electric field. A tiny amount of current flows momentarily to charge up the gate's capacitance (the oxide layer acts like a small capacitor), but once charged, the state is maintained with essentially zero ongoing current.
-
-### Voltage as Information
-
-This is why digital circuits use voltage levels to represent information. The output of a logic gate is a wire sitting at some voltage - high (near +V) or low (near ground). This wire connects to the next gate's input, which is a MOSFET gate terminal.
-
-The next transistor does not need to "receive" current to know the logic state. It senses the voltage through its electric field effect. The output is therefore a **voltage tap point**: a place where we measure the voltage, not a destination where current flows.
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│              GATES COMMUNICATE VIA VOLTAGE                      │
-│                                                                 │
-│   ┌─────────┐                      ┌─────────┐                  │
-│   │  Gate 1 ├───── Output wire ────┤  Gate 2 │                  │
-│   └─────────┘      (at 5V or 0V)   └─────────┘                  │
-│                         │                                       │
-│                         ▼                                       │
-│                  Voltage level                                  │
-│                  represents 1 or 0                              │
-│                                                                 │
-│   Gate 2's input is a MOSFET gate: it senses voltage            │
-│   through electric field, drawing almost no current.            │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
-
-This is why chains of logic gates are so efficient. Information propagates as voltage levels, not as continuous current flow. Each gate needs only a tiny pulse of current to charge the next gate's input capacitance, after which the signal is maintained with negligible power consumption.
+With Boolean algebra in hand, we have the mathematical foundation for digital logic. In the previous article, we learned how electrical circuits work: how voltage distributes across components, how the voltage divider determines the voltage at a midpoint, and how transistors act as voltage-controlled variable resistors. Now we can see how transistors implement Boolean operations in hardware.
 
 ## Logic Gates
 
@@ -326,7 +162,7 @@ With our understanding of Boolean algebra and circuit fundamentals, we can now s
 
 ### From Transistors to Gates
 
-Recall from our discussion of binary that a transistor is a voltage-controlled switch. By combining transistors cleverly, we can build circuits that implement each Boolean operation. Let us see how.
+Recall that a transistor is a voltage-controlled switch whose resistance changes based on the gate voltage: effectively infinite when off, very low when on. By combining transistors cleverly, we can build circuits that implement each Boolean operation. Let us see how.
 
 #### The NOT Gate (Inverter)
 
@@ -354,10 +190,10 @@ The NOT gate places a **resistor** and a **transistor** in series between the po
 
 The resistor has fixed resistance. The transistor's resistance changes based on the input: effectively infinite when OFF, very low when ON. The input signal (from another gate or input device) controls the transistor's gate, determining whether its channel opens or closes.
 
-This arrangement creates a **voltage divider**. Recall that voltage drops are distributed based on relative resistances. When we tap the voltage at a point between two resistors (or a resistor and transistor), the component with higher resistance claims the larger voltage drop. If the resistance below the tap point is higher, most of the voltage drops there, leaving the tap point close to +V. If the resistance above is higher, most of the voltage drops there, pulling the tap point toward ground.
+This arrangement creates a **voltage divider**, the circuit pattern we explored in the previous article. The component with higher resistance claims the larger voltage drop. If the resistance below the tap point is higher, most of the voltage drops there, leaving the tap point close to +V. If the resistance above is higher, most of the voltage drops there, pulling the tap point toward ground.
 
 **When input = 0 (transistor OFF):**
-The transistor has infinite resistance, so no current flows through the circuit. With no current, there is no voltage drop across the resistor. The output point, connected to +V through the resistor, equalizes to the same voltage: +V. Output = 1.
+The transistor has infinite resistance, breaking the path to ground, so no current flows. Recall that no current means no voltage drop: the output point, connected to +V through the resistor, sits at +V. Output = 1.
 
 **When input = 1 (transistor ON):**
 The transistor now has very low resistance, creating a complete path from +V to ground. Current flows through the resistor and transistor. Because the transistor's resistance is much lower than the resistor's, almost all of the voltage drops across the resistor, leaving the output point at nearly 0V. Output = 0.

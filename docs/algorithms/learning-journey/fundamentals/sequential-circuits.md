@@ -524,4 +524,4 @@ For general-purpose code, prefer clarity over clever bit tricks.
 
 We have now traveled from the abstract mathematics of Boolean algebra down to the physical transistors, and back up to the complete CPU executing the fetch-decode-execute cycle. You understand how circuits add, compare, select, and remember.
 
-But a CPU executing one instruction at a time seems limiting. How do we go from individual instructions to the rich programs we write today? In the next article, we will explore **assembly language**: the thin layer between hardware and software where human-readable instructions map directly to the binary patterns that control the CPU. This will reveal how loops, functions, and conditionals actually look when they are about to become electricity.
+But we have been focused on the *inside* of the CPU. How does the CPU actually communicate with RAM to fetch instructions and data? How do all the components we discussed in the very first article (CPU, RAM, storage) physically connect? In the next article, we will explore **computer architecture**: the buses, memory addressing, and cache hierarchy that tie the whole system together.

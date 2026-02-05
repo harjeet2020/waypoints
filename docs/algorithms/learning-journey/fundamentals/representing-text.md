@@ -321,4 +321,4 @@ We've now covered how computers represent fundamental data types in binary: inte
 
 But computers do more than store data. They transform it, following our instructions to perform calculations, make decisions, and execute complex logic. How does a machine built from simple switches actually *compute*?
 
-In the next article, we'll explore **logic gates**: the physical circuits that manipulate binary values. You'll see how AND, OR, and NOT operations combine to create the arithmetic and logic that powers every program.
+To answer that question, we first need to understand the physics that makes computation possible. In the next article, we will explore **electrical circuits**: how voltage, current, and resistance work together, how circuits are built from basic components, and how transistors fit into circuits as controllable switches. This foundation will prepare us to build logic gates in the article that follows.
