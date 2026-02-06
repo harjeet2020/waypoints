@@ -3,17 +3,19 @@ title: Electrical Circuits
 ---
 ## The Physics of Computation
 
-In the previous articles, we explored how computers represent information using binary. We learned that transistors act as tiny switches, and that patterns of 1s and 0s can encode numbers, text, and virtually any data we can imagine. But representation alone is not computation.
+In the previous articles, we explored how computers represent information using binary. We saw that patterns of 1s and 0s can encode numbers, text, and virtually any data we can imagine. But representation alone is not computation. A computer does not simply store data; it transforms data, performing calculations, making decisions, and executing logic. How does a machine built from simple switches actually do this?
 
-To understand how a computer actually *computes* (how it adds numbers, compares values, and makes decisions), we need to understand how electrical circuits work. In the coming articles, we will see how simple circuits called *logic gates* implement Boolean operations, how gates combine into circuits that perform arithmetic, and how these circuits come together in the CPU. But before any of that can make sense, we need to understand the physics it is all built upon.
+The answer lies in circuits called *logic gates*. A logic gate is a small circuit that takes one or two voltage levels as input (each representing a 1 or a 0) and produces a voltage level as output, according to a logical rule. An AND gate outputs 1 only when *both* its inputs are 1. An OR gate outputs 1 when *either* input is 1. A NOT gate flips its input: 1 becomes 0, 0 becomes 1. These are the building blocks of all digital computation. From gates, we build circuits that add numbers, compare values, store memory, and ultimately form the CPU itself.
 
-This article is your introduction to electricity and circuits. By the end, you will understand how current flows, how voltage distributes, and how transistors fit into circuits as controllable switches. These concepts are the foundation that makes everything in the next three articles click.
+In the next article, we will build these gates out of transistors and resistors. But to understand *how* they work (why a particular arrangement of components produces the right output), we first need to understand the physics they are built upon: how current flows through circuits, how voltage distributes across components, and how transistors act as controllable switches.
+
+That is what this article covers. By the end, you will have the electronics foundation that makes everything in the next three articles click.
 
 ## What is Electricity?
 
 All matter is made of atoms. At the center of each atom sits a nucleus containing protons (positively charged) and neutrons (no charge). Orbiting the nucleus are electrons, which carry a negative charge. In most materials, these electrons are tightly bound to their atoms and cannot move freely.
 
-But in *conductors* (metals like copper, gold, and aluminum), the outermost electrons are loosely bound. They can drift from atom to atom, forming a sea of mobile charge. When we apply a force to push these electrons in a consistent direction, we get *electricity*: the orderly flow of charged particles through a material.
+But in *conductors* (metals like copper, gold, and aluminum), the outermost electrons are loosely bound. In a metal, atoms pack tightly together and their outermost electron orbitals overlap, creating a shared "sea" of electrons that belongs to no single atom. These delocalized electrons can drift freely through the material. When we apply a force to push them in a consistent direction, we get *electricity*: the orderly flow of charged particles through a material.
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -100,7 +102,11 @@ Every material has some resistance. Copper wire has very low resistance (current
 
 ### Ohm's Law: The Relationship
 
-The relationship between voltage, current, and resistance is captured by **Ohm's Law**, arguably the most important equation in electronics:
+We have established that voltage pushes, current flows, and resistance opposes. But how exactly are these three quantities related?
+
+Think back to our water analogy. If you increase the pressure difference across a pipe (more voltage), more water flows through it (more current). If you make the pipe narrower (more resistance), less water flows for the same pressure (less current). And if you want to know the pressure difference across a narrow section of pipe, it depends on both how narrow the pipe is *and* how much water is flowing through it: more flow through a narrow pipe means a larger pressure difference across it.
+
+These three observations fit together into a single, elegant relationship called **Ohm's Law**, arguably the most important equation in electronics:
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -109,9 +115,9 @@ The relationship between voltage, current, and resistance is captured by **Ohm's
 │                        V = I × R                                 │
 │                                                                 │
 │   Where:                                                        │
-│     V = Voltage (volts)                                         │
-│     I = Current (amperes)                                       │
-│     R = Resistance (ohms)                                       │
+│     V = Voltage (volts, V)                                      │
+│     I = Current (amperes, A)                                    │
+│     R = Resistance (ohms, Ω)                                    │
 │                                                                 │
 │   Rearranged:                                                   │
 │     I = V / R     (current = voltage divided by resistance)     │
@@ -120,19 +126,31 @@ The relationship between voltage, current, and resistance is captured by **Ohm's
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-This says: the voltage across a component equals the current through it multiplied by its resistance. The relationships are intuitive: more resistance means less current, more voltage means more current.
+The equation describes the relationship between three quantities *across a single component*: the voltage drop from one end of the component to the other, the current flowing through it, and its resistance. When a circuit has multiple components in series, Ohm's Law applies to each one individually: each component has its own voltage drop, its own resistance, and the same current passing through it. The water analogy led us right to this relationship: more pressure difference across a section of pipe (voltage) means more flow through it (current), and a narrower pipe (resistance) means less flow for the same pressure.
 
-A simple example: if we connect a 1,000Ω resistor (commonly written as 1kΩ) between a 5V power supply and ground, how much current flows?
+### A Note on Units
+
+Each of these quantities has a unit worth understanding:
+
+- A **volt** (V) measures the energy carried by each unit of charge. A 5V supply gives each unit of charge five joules of energy to spend as it travels the circuit.
+- An **ampere** (A), or amp, measures the rate of charge flow. One amp means roughly 6.2 billion billion electrons passing a point every second. In digital circuits, currents are typically measured in milliamps (mA, thousandths of an amp) or even microamps (μA, millionths).
+- An **ohm** (Ω) measures how much a material resists current. By Ohm's Law, one ohm is the resistance that allows one amp to flow when one volt is applied.
+
+These units tie together neatly: volts = amps × ohms. If you know any two, you can calculate the third.
+
+:::info The Story Behind the Law
+Georg Ohm discovered this relationship in 1827 through careful experimentation: he varied the voltage across conductors, measured the resulting current, and found the relationship was consistently linear. At the time, nobody knew *why* it should be linear. The theoretical explanation came in 1900, when Paul Drude modeled conductors as lattices of atoms with free electrons bouncing between them. When voltage is applied, the electric field accelerates electrons in one direction, but they keep colliding with atoms in the lattice, which slows them down. The result is an average drift velocity that is proportional to the applied field, which gives rise to the linear V = IR relationship.
+
+Ohm's Law holds remarkably well for most conductors at normal temperatures, but it is not universal. Materials like diodes and transistors (in certain operating regimes) violate it, as do superconductors. For the circuits in this series, however, it applies perfectly.
+:::
+
+A simple example to build that intuition: if we connect a 1,000Ω resistor (commonly written as 1kΩ) between a 5V power supply and ground, how much current flows?
 
 ```
 I = V / R = 5V / 1,000Ω = 0.005A = 5mA
 ```
 
 Five milliamps. If we doubled the resistance to 2kΩ, the current would halve to 2.5mA. If we doubled the voltage to 10V instead (keeping 1kΩ), the current would double to 10mA.
-
-:::info A Qualitative Understanding is Enough
-We will not be doing circuit calculations in this series. The point of Ohm's Law is to give you the *principle* connecting voltage, current, and resistance. When we say "higher resistance causes a larger voltage drop," you now know the physics behind that statement. The qualitative understanding is what matters for everything that follows.
-:::
 
 ## Building Circuits
 
@@ -349,41 +367,68 @@ If the water levels were different, the pressure difference would cause water to
 
 The same applies to voltage. If two points are connected and no current flows between them, they must be at the same voltage. If they were at different voltages, current would flow until they equalized. This is why the open end of the resistor in the previous example sits at 5V: it is connected to +5V through the resistor, no current flows, so both ends of the resistor must be at the same voltage.
 
-## Electric Fields
+## Electric Fields and Charge
 
-So far, we have talked about current flowing through wires and resistors. But there is another way that electrical forces can act: through **electric fields**. Understanding electric fields is essential for understanding how transistors control current without consuming any themselves.
+So far, we have talked about current flowing through wires and resistors. But there is another way that electrical forces can act: through **electric fields**. Understanding electric fields is essential for understanding how transistors control current without consuming any themselves. To get there, we need to start from a more fundamental concept: electric charge itself.
+
+### What is Electric Charge?
+
+Electric charge is a fundamental property of matter, as basic as mass. Just as mass determines how strongly an object feels gravity, charge determines how strongly a particle interacts with electrical forces.
+
+Charge comes in two varieties, which we call *positive* and *negative*. The names are a historical convention (Benjamin Franklin chose them in the 1750s), but the underlying rule is one of nature's most fundamental laws: **opposite charges attract, like charges repel**. A positive charge pulls a negative charge toward it, pushes another positive charge away, and vice versa.
+
+In atoms, protons carry positive charge and electrons carry negative charge. These charges are exactly equal in magnitude but opposite in sign, so a normal atom (with equal numbers of protons and electrons) is electrically neutral. When electrons are stripped away or added, the atom becomes a charged *ion*, and it begins to interact with electrical forces.
+
+The charge carried by a single electron is incredibly small. It takes roughly 6.2 billion billion (6.2 × 10¹⁸) electrons flowing past a point every second to make one ampere of current. But in a copper wire, there are *vastly* more free electrons than that available to move, which is why metals conduct so well.
 
 ### Forces at a Distance
 
-Every charged particle creates an invisible force field around itself called an *electric field*. This field exerts a force on other charged particles nearby: positive charges repel other positive charges and attract negative ones (and vice versa). The field exists in the space around the charge, and it acts on any other charges that enter that space.
+Here is the remarkable thing about charge: it does not need physical contact to exert force. Every charged particle creates an invisible **electric field** around itself, a region of influence that extends outward in all directions. Any other charged particle that enters this field feels a force: attraction if the charges are opposite, repulsion if they are the same.
 
-The important point for our purposes is that an electric field can influence charged particles *without physical contact and without current flowing*. The field simply reaches through space (and through certain insulating materials) and rearranges charges on the other side.
+The strength of this force depends on two things:
+
+- **The amount of charge:** More charge means a stronger field and a stronger force.
+- **The distance:** The force weakens rapidly with distance. Double the distance and the force drops to one quarter. This inverse-square relationship (known as **Coulomb's Law**) is why proximity matters so much in circuit design.
+
+:::info Coulomb's Law
+The force between two charged particles is given by:
+
+**F = k × (q₁ × q₂) / r²**
+
+Where F is the force, q₁ and q₂ are the amounts of charge, r is the distance between them, and k is a constant. The key insight is the r² in the denominator: double the distance and the force drops to one quarter. Halve the distance and the force quadruples. This is why the thin oxide layer in a transistor (just nanometers thick) allows such effective control over the channel.
+:::
+
+In our water analogy, you might think of the electric field as a current in the water that pushes floating objects around. The current exists whether or not any objects are present to feel it, and it gets weaker the farther you are from the source.
 
 ### Fields Through Insulators
 
-Here is where it gets interesting. Electric fields can pass through insulating materials. Current cannot cross an insulator (by definition, the electrons are locked in place). But an electric field can reach through the insulator and affect the material on the other side.
+Here is where this becomes essential for understanding transistors. Current cannot flow through an insulator: by definition, the electrons are locked to their atoms. But an electric field *can* pass through an insulating material, and it can influence charges on the other side.
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │              ELECTRIC FIELD THROUGH INSULATOR                    │
 │                                                                 │
-│     Charged plate          Insulator          Material          │
+│     Charged plate          Insulator          Conductor         │
 │   ┌──────────────┐    ┌─────────────────┐   ┌──────────────┐   │
 │   │  + + + + + + │    │                 │   │ - - - - - - -│   │
-│   │  + + + + + + │~~~~│  (field passes  │~~~│  (charges    │   │
-│   │  + + + + + + │    │   through)      │   │  rearrange)  │   │
+│   │  + + + + + + │~~~~│  (field passes  │~~~│  (electrons   │   │
+│   │  + + + + + + │    │   through)      │   │  pulled near) │   │
 │   └──────────────┘    └─────────────────┘   └──────────────┘   │
 │                                                                 │
 │   No current crosses the insulator.                             │
-│   But the electric field does, pulling charges in the material  │
-│   toward the charged plate.                                     │
+│   But the field passes through it, attracting electrons         │
+│   in the conductor toward the insulator boundary.               │
+│   The electrons move freely within the conductor,               │
+│   but cannot cross the insulating barrier.                      │
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-When a positive charge is placed on one side of an insulator, the electric field reaches through and attracts negative charges (electrons) in the material on the other side. The electrons cannot cross the insulator, but they are pulled toward it, accumulating near the surface. This rearrangement happens without any current flowing across the boundary.
+When a positive charge is placed on one side of an insulator, the electric field reaches through the insulating material. On the other side, if there is a conductor (or semiconductor), the field attracts electrons within that material toward the boundary. The electrons are free to move *within* their material, so they accumulate near the insulator's surface. But they cannot cross the insulator itself. The result is a rearrangement of charge without any current flowing across the boundary.
 
-This principle is exactly how a transistor's gate works. The gate is separated from the channel by a thin insulating layer, but its electric field reaches through and controls whether the channel conducts. Let us see this in detail.
+The strength of this effect depends on distance. Remember Coulomb's Law: the force drops off rapidly as distance increases. This is why the insulating layer in a transistor is made extraordinarily thin (just a few nanometers in modern chips). The thinner the insulator, the closer the gate charge is to the channel, and the stronger the field's influence. This engineering detail is one of the key reasons transistors have gotten smaller over the decades: thinner oxides mean more control over the channel with less voltage.
+
+This principle is exactly how a transistor's gate works. Let us see it in action.
 
 ## Transistors in Circuits
 
@@ -442,9 +487,17 @@ The gate terminal is separated from the channel by a thin layer of oxide, which 
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-When voltage is applied to the gate, the resulting electric field penetrates through the oxide insulator and reaches the semiconductor channel below. It attracts charge carriers into the channel, transforming it from a non-conductor into a conductor. Remove the gate voltage, and the field disappears, the carriers disperse, and the channel returns to its non-conductive state.
+To see how this works in detail, let us trace the full sequence from applied voltage to conducting channel.
 
-This has a profound consequence: **a transistor's gate senses voltage without consuming current**. A tiny amount of current flows momentarily to charge up the gate (the oxide layer acts like a small capacitor), but once charged, the state is maintained with essentially zero ongoing current.
+**Step 1: Voltage charges the gate.** When we connect the gate to +5V, the power supply pulls electrons out of the gate metal (they flow through the external circuit toward the supply's positive terminal). With fewer electrons than protons, the gate surface is left with a net positive charge. The gate is now a charged plate, sitting just nanometers above the semiconductor channel, separated only by the thin oxide insulator.
+
+**Step 2: The field reaches through the oxide.** The positively charged gate creates an electric field that penetrates through the oxide. Because the oxide is so thin, the field at the channel's surface is powerful (remember Coulomb's Law: force grows rapidly as distance shrinks).
+
+**Step 3: The field creates a conductive channel.** The semiconductor between source and drain does not normally conduct: most of its electrons are bound to atoms in the crystal lattice. But the strong electric field from the gate pulls free electrons toward the surface, while pushing positive charge carriers away. When enough electrons accumulate, they form a thin conductive layer that bridges source and drain. Current can now flow.
+
+**Step 4: Removing voltage dissipates the channel.** When the gate voltage drops to 0V, the power supply stops pulling electrons from the gate, and the gate discharges. The electric field disappears. The electrons that were held at the surface drift back into the bulk semiconductor, the conductive layer vanishes, and current stops.
+
+This has a profound consequence: **a transistor's gate senses voltage without consuming current**. A tiny amount of current flows momentarily to charge up the gate (as described in step 1), but once charged, the state is maintained with essentially zero ongoing current. The gate controls *through the field*, not through a flow of charge.
 
 ### Voltage as Information
 
@@ -483,7 +536,7 @@ Circuit 1 does not need to "send" current to Circuit 2. It simply holds a voltag
 
 5. **No current means no voltage drop.** If no current flows through a component, both ends sit at the same voltage. This single insight is the key to understanding how logic gates produce their output.
 
-6. **Electric fields act through insulators.** A charged surface can influence a nearby material without physical contact or current flow. This is how transistor gates control the channel.
+6. **Electric charge creates fields that act through insulators.** Opposite charges attract, like charges repel, and the force weakens with distance (Coulomb's Law). A charged surface can influence charges in a nearby material without current crossing the boundary. This is how transistor gates control the channel: through the field, not through a flow of charge.
 
 7. **Transistors are voltage-controlled variable resistors.** The gate voltage controls channel resistance via electric fields, consuming essentially no current. This makes voltage an ideal carrier of information between circuits.
 
