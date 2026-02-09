@@ -143,9 +143,9 @@ Think of it like reading a recipe: "What's the next step? Oh, step 7: 'Add salt.
 
 ### Step 2: Decode
 
-The CPU figures out what the instruction means. Instructions are just numbers (remember, everything is binary!), and the CPU has circuitry that interprets these numbers.
+The CPU figures out what the instruction means. Instructions are encoded as numbers, and the CPU has built-in circuitry that interprets what each number means.
 
-For example, the binary pattern `10110000 01100001` might mean "move the value 97 into register AL."
+For example, the sequence `10110000 01100001` might mean "move the value 97 into register AL." Those are numbers written in *binary*, a number system built entirely on 1s and 0s that we will explore in the next article.
 
 This is like understanding what "add salt" means - you need to know what salt is and what adding means.
 
@@ -304,4 +304,4 @@ While waiting for slow operations (disk, network), the CPU could be doing other 
 
 ## Looking Ahead
 
-Now that we have a basic grasp of hardware, we can have a look at how computers work on a low level. The next three articles will focus on **binary** - why computers use 1s and 0s, and how we represent different data types such as negative / floating-point numbers, or characters / strings.
+We know what the CPU, RAM, and storage do, and how data flows between them. But there is something we glossed over: every piece of data in this system, every number and instruction, is stored as a pattern of 1s and 0s. Why only two digits? And how can they possibly represent the richness of text, images, and sound? The next article answers that question.

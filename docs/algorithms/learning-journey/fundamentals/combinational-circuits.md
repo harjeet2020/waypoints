@@ -3,11 +3,9 @@ title: Combinational Circuits
 ---
 ## Gates Working Together
 
-In the previous article, we learned that logic gates implement Boolean operations in hardware. A NOT gate inverts, an AND gate conjoins, an OR gate disjoins. But a single gate performs only a single operation. To do anything useful, we must combine gates into larger structures.
+A NOT gate inverts. An AND gate conjoins. An OR gate disjoins. Individually, each performs something almost trivially simple. The power of logic gates lies not in what they do alone, but in what they can do together.
 
-This article explores **combinational circuits**: circuits where the output depends only on the current inputs. There is no memory, no history, no state. Change the inputs, and the outputs change immediately (well, within nanoseconds). These circuits are the workhorses of computation, performing arithmetic, comparison, and selection.
-
-By the end of this article, you will understand how gates combine to add numbers, compare values, and choose between alternatives. You will see the hardware equivalent of `+`, `==`, and `if-else`.
+This article explores **combinational circuits**: circuits built by wiring gates together, where the output depends only on the current inputs. No memory, no stored state, no sense of time. Change the inputs and the output follows within nanoseconds. Despite this simplicity, combinational circuits are the computational workhorses of every processor. By the end, you will see the hardware behind `+`, `==`, and `if-else`.
 
 ## Arithmetic: The Half-Adder
 
@@ -339,6 +337,6 @@ For multi-bit comparison, we start from the most significant bit and work down, 
 
 ## Looking Ahead
 
-Combinational circuits are powerful, but they have a fundamental limitation: **they have no memory**. The output depends only on the current inputs. The moment the inputs change, the output changes. There is no way to store information, count events, or remember what happened one nanosecond ago.
+Every circuit we have built is stateless. Feed it inputs and it produces outputs; change the inputs and the outputs change instantly. There is no way for these circuits to count how many times they have been activated, or to hold a value from one moment to the next.
 
-To build a computer that can execute programs, we need circuits that can *remember*. In the next article, we will explore **sequential circuits**: circuits that introduce feedback loops to store state. We will see how flip-flops store bits, how registers store words, and how the clock synchronizes everything. Finally, we will bring it all together in the ALU and the fetch-decode-execute cycle, completing our journey from transistors to the thinking machine.
+And yet your computer clearly *does* remember things. It holds variables, tracks which instruction comes next, and loops through code step by step. Something is missing from our toolkit. The next article fills that gap with **sequential circuits**, where a simple idea, feeding a circuit's output back into its input, gives rise to memory, registers, and ultimately the CPU itself.

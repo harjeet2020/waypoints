@@ -3,11 +3,9 @@ title: Representing Numbers
 ---
 ## Beyond Positive Integers
 
-In the previous article, we learned how binary works: a positional number system where each digit represents a power of 2. We saw how to convert between binary and decimal, and how bytes group 8 bits together to represent values from 0 to 255.
+Binary gives us a way to count: 0, 1, 10, 11, 100, and onward to infinity. But counting is not enough. Real programs deal in temperatures below zero, bank balances that dip into the red, and measurements like 3.14159 that fall between whole numbers. How does a system built on 1s and 0s handle negative numbers and fractions?
 
-But there is a problem. So far, we have only been able to represent positive whole numbers. How does a computer represent -5 or -1000? What about 3.14159 or 0.001? Real-world programs need negative numbers for temperatures, account balances, and coordinates. They need decimals for prices, measurements, and scientific calculations.
-
-In this article, we will explore how computers represent the full spectrum of numbers, and discover both the elegance and the pitfalls of these representations.
+The naive answers turn out to be subtly broken. In this article, we will explore how computers actually represent the full spectrum of numbers, and discover both the elegance and the pitfalls of these representations.
 
 ## Negative Numbers
 
@@ -627,4 +625,4 @@ This is why JavaScript (which uses doubles for all numbers) has `Number.MAX_SAFE
 
 ## Looking Ahead
 
-We now understand how computers represent both integers and decimals. But numbers are only part of the story. In the next article, we'll explore how computers represent text, from the simple ASCII standard to the comprehensive Unicode system that encodes every character from every writing system on Earth.
+Integers, negative numbers, and decimals: with two's complement and IEEE 754, binary can express the full spectrum of numerical values. That covers quantities. It does not cover language. The letter 'A', the Chinese character '中', the emoji '😀': these are not numbers, and they require an entirely different encoding strategy. The next article explores how we map the world's writing systems onto patterns of bits.

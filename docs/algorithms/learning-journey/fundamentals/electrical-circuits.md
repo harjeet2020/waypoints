@@ -3,11 +3,9 @@ title: Electrical Circuits
 ---
 ## The Physics of Computation
 
-In the previous articles, we explored how computers represent information using binary. We saw that patterns of 1s and 0s can encode numbers, text, and virtually any data we can imagine. But representation alone is not computation. A computer does not simply store data; it transforms data, performing calculations, making decisions, and executing logic. How does a machine built from simple switches actually do this?
+The last three articles were about representation: how binary encodes integers, decimals, and text. Now we shift gears. The remaining articles in this series explain how data is *processed*: how a machine built from simple switches can add numbers, compare values, and execute programs.
 
-The answer lies in circuits called *logic gates*. A logic gate is a small circuit that takes one or two voltage levels as input (each representing a 1 or a 0) and produces a voltage level as output, according to a logical rule. An AND gate outputs 1 only when *both* its inputs are 1. An OR gate outputs 1 when *either* input is 1. A NOT gate flips its input: 1 becomes 0, 0 becomes 1. These are the building blocks of all digital computation. From gates, we build circuits that add numbers, compare values, store memory, and ultimately form the CPU itself.
-
-In the next article, we will build these gates out of transistors and resistors. But to understand *how* they work (why a particular arrangement of components produces the right output), we first need to understand the physics they are built upon: how current flows through circuits, how voltage distributes across components, and how transistors act as controllable switches.
+At the heart of that story are *logic gates*: tiny circuits that implement logical operations like AND, OR, and NOT. From gates, we build circuits that perform arithmetic, store memory, and ultimately form the CPU. The next article will construct these gates from transistors and resistors. But to understand *why* a particular arrangement of components produces the right output, we first need to understand the physics they are built upon: how current flows through circuits, how voltage distributes across components, and how transistors act as controllable switches.
 
 That is what this article covers. By the end, you will have the electronics foundation that makes everything in the next three articles click.
 
@@ -100,6 +98,10 @@ In our water analogy, resistance corresponds to a *narrow pipe* or an obstructio
 
 Every material has some resistance. Copper wire has very low resistance (current flows easily). A **resistor** (a component specifically designed to restrict current) has a controlled, fixed resistance. An insulator has effectively infinite resistance (no current flows at all, no matter the voltage).
 
+:::tip Resistance Controls Current, Not Voltage
+A resistor does not subtract a fixed amount of voltage like a toll booth collecting a fee. Instead, it restricts how much current can flow for a given voltage (I = V / R). When current does flow through a resistor, a voltage difference appears across it as a consequence (V = I x R), but the size of that difference depends on the current, not on the resistance alone. The same 1kΩ resistor can produce a 5V difference in one circuit and a 20V difference in another, depending on how much current is passing through it. We will see exactly how this plays out when we explore voltage drops later in this article.
+:::
+
 ### Ohm's Law: The Relationship
 
 We have established that voltage pushes, current flows, and resistance opposes. But how exactly are these three quantities related?
@@ -156,7 +158,9 @@ Five milliamps. If we doubled the resistance to 2kΩ, the current would halve to
 
 ### The Complete Loop
 
-For current to flow, there must be a complete path from the power supply's positive terminal, through the circuit components, and back to the negative terminal (ground). If the path is broken at any point, no current flows anywhere in the circuit.
+A circuit is a loop. Current flows from the power supply's positive terminal, through the circuit components, and into the negative terminal. We call this negative terminal **ground** (abbreviated GND) and label it 0V, but that 0V is a convention, not a physical law. Voltage is always a difference between two points, so we must choose a reference to measure from. Ground is that reference: the baseline we call zero, much like sea level is the baseline we call zero altitude.
+
+From ground, current continues through the power supply back to the positive terminal. The supply spends energy to push charge from low voltage back up to high voltage, exactly as the pump in our water analogy raises water from low pressure to high pressure. As long as the supply has energy and the path is unbroken, current flows continuously around this loop. If the path is broken at any point, current stops everywhere in the circuit, not just at the break.
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -177,8 +181,6 @@ For current to flow, there must be a complete path from the power supply's posit
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
 ```
-
-This is like a water pipe system: if you cut a pipe, water stops flowing everywhere in the system, not just at the cut. The loop must be complete.
 
 ### Essential Components
 
@@ -246,9 +248,19 @@ Understanding how voltage distributes across a circuit is *the* key to understan
 
 ### Voltage Drops
 
-When current flows through a component with resistance, the voltage is higher on one side than the other. This difference is called a **voltage drop**. The energy that charges lose crossing the resistance is converted to heat (or useful work, in the case of a motor or light bulb).
+When current flows through a component with resistance, the voltage is higher on one side than the other. This difference is called a **voltage drop**, and the energy lost in the process is converted to heat (or useful work, in the case of a motor or light bulb).
 
-In a series circuit, the total voltage from the power supply is shared among the components. Each component claims a share of the voltage proportional to its resistance: higher resistance means a larger share. This follows directly from Ohm's Law.
+The power supply holds its positive terminal at +V and ground at 0V. That difference is fixed and maintained by the supply. Any path connecting the two must bridge that entire difference: voltage starts at +V on one end and reaches 0V at the other. The components along the way determine how this transition is distributed. If there is one resistor, it bears the entire transition. If there are two, they share it in proportion to their resistances. But the total transition is always the full supply voltage, because the endpoints are fixed.
+
+Why must it work this way? Because a circuit is a loop, and energy cannot appear or disappear. The power supply puts energy into the circuit, and the resistors convert that energy into heat. Since charge travels around the loop and returns to where it started, all the energy put in must equal all the energy taken out. Imagine hiking a circular trail that starts and ends at sea level. You climb up, you descend, you follow ridgelines and valleys, but when you arrive back at the trailhead, your total descent must equal your total ascent. You cannot return to sea level with "leftover altitude." The same principle governs voltage: the sum of all voltage drops must equal the voltage supplied. This principle is known as **Kirchhoff's Voltage Law** (KVL), and it is one of the foundational laws of circuit analysis.
+
+:::info Kirchhoff's Voltage Law
+The sum of all voltage changes around any closed loop in a circuit equals zero. Equivalently: the sum of all voltage drops across components equals the supply voltage. This is a direct consequence of conservation of energy, and it holds for every circuit, no matter how complex.
+
+The law is named after Gustav Kirchhoff, who formulated it in 1845. Kirchhoff actually stated two laws: the *voltage law* described here, and a *current law* (the current entering any junction equals the current leaving it, which is conservation of charge). Together, they are the basis for analyzing any circuit.
+:::
+
+In a series circuit, the total voltage is shared among the components. Each component claims a share proportional to its resistance: higher resistance means a larger share. This follows directly from Ohm's Law. Let us trace through an example.
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -273,7 +285,45 @@ In a series circuit, the total voltage from the power supply is shared among the
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-Notice how the voltage drops add up to the total supply voltage (5V). This is always the case: the voltage supplied must equal the sum of all voltage drops in the circuit. The component with four times the resistance claims four times the voltage drop.
+The drops add up to 5V, exactly the supply voltage, just as Kirchhoff's Voltage Law requires. The component with four times the resistance claims four times the voltage drop.
+
+:::tip Calculating Voltage Drops
+Voltage drop calculations in a series circuit always follow the same three steps:
+
+1. **Find the total resistance.** Add up all the resistances in the path. In our example: 4kΩ + 1kΩ = 5kΩ.
+2. **Calculate the current.** Apply Ohm's Law to the full circuit: I = V_supply / R_total. Here: I = 5V / 5kΩ = 1mA. This current is the same through every component in the series path.
+3. **Calculate each voltage drop.** Apply Ohm's Law to each component individually: V_drop = I × R. Here: 1mA × 4kΩ = 4V across R1, and 1mA × 1kΩ = 1V across R2.
+
+You can verify your work: the drops must sum to the supply voltage. If they do not, something went wrong.
+:::
+
+What happens with only one resistor? The same rules apply, but there is nothing to share the voltage with. The single resistor claims the entire voltage drop:
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                  SINGLE RESISTOR                                   │
+│                                                                 │
+│         +20V                                                    │
+│          │                                                      │
+│         ─┴─  R = 1kΩ                                            │
+│          │                                                      │
+│         GND                                                     │
+│                                                                 │
+│   Current: I = 20V / 1kΩ = 20mA                                │
+│   Drop across R: 20mA × 1kΩ = 20V                              │
+│   Voltage after R: 0V ✓                                        │
+│                                                                 │
+│   The entire supply voltage drops across the single resistor.   │
+│   It does not matter whether R is 1Ω or 1MΩ; the full          │
+│   voltage always drops across it. The resistance only           │
+│   determines how much current flows.                            │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+And what happens with *no* resistor? If you connect +V directly to ground with just a wire, the wire has near-zero resistance. By Ohm's Law, current = voltage / resistance, and dividing by a near-zero value produces an enormous result. This is a **short circuit**: current surges to a dangerous level, the wire heats rapidly, and something fails. In practice, the wire melts, a fuse blows, or the power supply is damaged.
+
+This is why every practical circuit includes resistance in the current path. Resistance is not just an obstacle to overcome; it is what makes a circuit controllable. Without it, there is no way to limit current, no way to create useful voltage drops, and no way to build logic. Every logic gate we will encounter in the next article places resistors and transistors in series precisely to create controlled voltage drops at predictable points.
 
 ### The Voltage Divider
 
@@ -312,7 +362,7 @@ Why does this matter? Because a logic gate places a fixed resistor and a transis
 
 ### No Current, No Voltage Drop
 
-Here is the most important principle for understanding logic gates: **if no current flows through a component, there is no voltage drop across it**.
+There is one more principle that will prove critical in the next article: **if no current flows through a component, there is no voltage drop across it**.
 
 This follows directly from Ohm's Law. The voltage drop across a component is V = I x R. If I = 0 (no current), then V = 0 x R = 0, regardless of the resistance. No current, no drop.
 
@@ -341,15 +391,11 @@ The resistor is connected to 5V, and since no current flows through it, both end
 
 This might feel counterintuitive. After all, 5V is "trying" to push current through the resistor. But without a complete loop, there is nowhere for the current to go. The voltage is present as a potential, but without a path to ground, no current can flow and no voltage can drop.
 
-### Connected Points Equalize
-
-A closely related principle: **connected points equalize to the same voltage when no current flows between them**.
-
-Imagine two water tanks connected by a pipe:
+Our water analogy captures why this must be so. Imagine two tanks connected by a pipe:
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│              CONNECTED POINTS EQUALIZE                           │
+│                 NO FLOW MEANS EQUAL LEVELS                       │
 │                                                                 │
 │   ┌───────────┐           ┌───────────┐                        │
 │   │ ~~~~~~~~~ │───────────│ ~~~~~~~~~ │                        │
@@ -363,13 +409,13 @@ Imagine two water tanks connected by a pipe:
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-If the water levels were different, the pressure difference would cause water to flow from the higher tank to the lower one until they equalized. The only way for flow to be zero is if the levels are already the same.
-
-The same applies to voltage. If two points are connected and no current flows between them, they must be at the same voltage. If they were at different voltages, current would flow until they equalized. This is why the open end of the resistor in the previous example sits at 5V: it is connected to +5V through the resistor, no current flows, so both ends of the resistor must be at the same voltage.
+If the water levels were different, the pressure difference would cause water to flow from the higher tank to the lower one until they equalized. The only way for flow to be zero is if the levels are already the same. Voltage works identically: if two connected points were at different voltages, current would flow between them until the voltages equalized. The only way for current to be zero is if both points are already at the same voltage. This is exactly why both ends of the open resistor sit at 5V: they are connected through the resistor, no current flows, so they must be at the same voltage.
 
 ## Electric Fields and Charge
 
-So far, we have talked about current flowing through wires and resistors. But there is another way that electrical forces can act: through **electric fields**. Understanding electric fields is essential for understanding how transistors control current without consuming any themselves. To get there, we need to start from a more fundamental concept: electric charge itself.
+Every circuit we have studied so far works through *current*: electrons flowing through wires, resistors, and complete loops. But the transistor, as we introduced it in the Binary Basics article, has a peculiar property: its gate controls whether current flows through the channel, yet no current flows into the gate itself. How can a terminal exert control without any charge passing through it?
+
+The answer lies in **electric fields**: forces that act at a distance, through empty space and even through insulators, without requiring any flow of charge. To understand how the transistor's gate works, we need to understand these fields. And to understand fields, we need to start from a more fundamental concept: electric charge itself.
 
 ### What is Electric Charge?
 
@@ -542,6 +588,4 @@ Circuit 1 does not need to "send" current to Circuit 2. It simply holds a voltag
 
 ## Looking Ahead
 
-We now understand the physics that makes digital electronics possible. We know how current flows, how voltage distributes across components, and how transistors fit into circuits as controllable switches.
-
-In the next article, we will put this knowledge to work. We will explore **Boolean algebra** (the mathematics of logic) and then build **logic gates**: circuits that implement AND, OR, NOT, and XOR using the transistors and voltage dividers we now understand. You will see how the physics of this article translates directly into the logic of computation.
+Voltage, current, resistance, the voltage divider, the transistor: these are our building blocks. The next article introduces **Boolean algebra**, the mathematics of true and false, and then uses it to construct **logic gates** from the components we now understand. The physics is in place; it is time to build.

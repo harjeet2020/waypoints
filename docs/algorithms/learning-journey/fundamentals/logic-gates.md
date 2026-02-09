@@ -3,11 +3,11 @@ title: Logic Gates
 ---
 ## From Algebra to Gates
 
-In the previous article, we explored the physics of electrical circuits: how voltage, current, and resistance govern circuit behavior, how voltage dividers determine the voltage at a midpoint, and how transistors act as voltage-controlled switches. We now have the physical foundation for digital electronics.
+The previous article gave us the physical tools: voltage dividers that produce predictable output voltages, and transistors that act as switches controlled by electric fields. With these raw materials in hand, we can ask the central question: what do we build?
 
-This article provides the *mathematical* foundation: **Boolean algebra**, the system of logic that underlies all digital computation. We will then bring math and physics together by building **logic gates**: circuits that implement Boolean operations using the transistors and voltage dividers we now understand.
+All of logic, it turns out, every decision a computer will ever make, can be reduced to just three operations: AND, OR, and NOT. These belong to a branch of mathematics called **Boolean algebra**, developed in the 1800s, long before computers existed. And each one can be implemented as a tiny circuit (a **logic gate**) using nothing more than the components we already understand.
 
-In the next article, we will learn about **combinational circuits**: how we can combine gates to perform arithmetic, comparison, and selection. Finally, the following article will discuss **sequential circuits and the CPU**, which will explain how computers are able to execute instructions like loops or if statements.
+This is where math meets physics. We will explore Boolean algebra first, then build gates and see how the voltage divider pattern produces logical outputs as a direct consequence of the circuit principles from the previous article. From these three operations, everything else follows: the next article combines gates into circuits that perform arithmetic and make decisions, and the article after that introduces memory, completing our path to the CPU.
 
 ## Boolean Algebra: The Mathematics of Logic
 
@@ -158,15 +158,13 @@ With Boolean algebra in hand, we have the mathematical foundation for digital lo
 
 Now we bridge the abstract and the physical. A **logic gate** is an electronic circuit that implements a Boolean operation. It takes one or more binary inputs and produces a binary output according to a specific logical function.
 
-With our understanding of Boolean algebra and circuit fundamentals, we can now see how transistors combine to form these gates.
+With our understanding of Boolean algebra and circuit fundamentals, we are ready to build these gates from transistors. But the path from transistors to useful logic holds a surprise: the simplest multi-input gates to build are not AND and OR, but their inverted cousins, **NAND** and **NOR**. To understand why, we need to look at how transistors naturally behave in circuits, starting with the simplest gate of all.
 
 ### From Transistors to Gates
 
-Recall that a transistor is a voltage-controlled switch whose resistance changes based on the gate voltage: effectively infinite when off, very low when on. By combining transistors cleverly, we can build circuits that implement each Boolean operation. Let us see how.
-
 #### The NOT Gate (Inverter)
 
-The NOT gate is the simplest logic gate. Its job is to invert the input: if the input is 1, the output is 0, and vice versa. The circuit achieves this by arranging components so that electricity has no choice but to produce inversion - it is a consequence of physics, not programming.
+The NOT gate is the simplest logic gate. Its job is to invert the input: if the input is 1, the output is 0, and vice versa. The circuit achieves this by arranging components so that electricity has no choice but to produce inversion: it is a consequence of physics, not programming.
 
 The NOT gate places a **resistor** and a **transistor** in series between the power supply (+V) and ground, with the output taken from the point between them:
 
@@ -234,11 +232,17 @@ The placement of components matters: if we swapped them (transistor above, resis
 
 This relationship is continuous: the output voltage always reflects the current input state, updating within nanoseconds. Complex behavior emerges from the physics of current flow, not from any external intelligence directing traffic.
 
+:::tip Why Inverted Gates Come First
+Notice that the NOT gate's output is always the *opposite* of what the transistor does. This inversion is a consequence of placing the output above the transistor in the voltage divider, and the same pattern holds when we add more transistors. Building a true AND or OR gate directly would require an extra NOT stage to undo this natural inversion, meaning extra transistors and extra cost.
+
+So instead, we lean into the inversion. We build NAND (not-AND) and NOR (not-OR) first, because they are what the physics gives us for free, and then derive AND and OR from them. As we will soon see, NAND and NOR are each powerful enough to implement *any* Boolean function on their own.
+:::
+
 #### The NAND Gate
 
-Before we build AND and OR, let us build something even more fundamental: the **NAND gate** (NOT-AND). NAND returns false only when both inputs are true.
+The **NAND gate** (NOT-AND) returns false only when *both* inputs are true. It is, in many ways, the most important gate in digital electronics.
 
-The NAND gate uses two transistors arranged **in series** between the output and ground. For current to flow to ground, it must pass through *both* transistors. If either transistor is off, the path is broken.
+The circuit uses two transistors arranged **in series** between the output and ground. For current to flow to ground, it must pass through *both* transistors. If either transistor is off, the path is broken.
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -294,7 +298,7 @@ Both transistors conduct, completing the path to ground. Current flows through t
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-The series arrangement is the key insight: it implements AND at the transistor level. Both switches must close for current to flow. By placing the output *above* the transistors (connected to +V through a resistor), we get the inverted result: NAND.
+The series arrangement implements AND at the transistor level: both switches must close for current to flow. Because the output sits above the transistors (connected to +V through a resistor), the result is naturally inverted: NAND.
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -312,7 +316,7 @@ The series arrangement is the key insight: it implements AND at the transistor l
 
 #### The NOR Gate
 
-The **NOR gate** (NOT-OR) returns true only when both inputs are false. Where NAND uses transistors in series, NOR uses them **in parallel**.
+The **NOR gate** (NOT-OR) returns true only when *both* inputs are false. Where NAND uses transistors in series, NOR uses them **in parallel**.
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -371,7 +375,7 @@ At least one transistor conducts, creating a path to ground. Current flows throu
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-The parallel arrangement implements OR at the transistor level: *either* switch closing allows current to flow. By placing the output above the transistors, we get the inverted result: NOR.
+The parallel arrangement implements OR at the transistor level: *either* switch closing allows current to flow. Because the output sits above the transistors, the result is inverted: NOR.
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -387,17 +391,25 @@ The parallel arrangement implements OR at the transistor level: *either* switch 
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-:::info Universal Gates
-NAND and NOR are called **universal gates** because any Boolean function can be implemented using only NAND gates (or only NOR gates). This is remarkable: you can build an entire computer using just one type of gate. In practice, manufacturers often use NAND-only or NOR-only designs because producing identical gates is simpler and cheaper.
+#### Universal Gates
+
+NAND and NOR each have a remarkable property: *any* Boolean function can be implemented using only NAND gates, or only NOR gates. This is why they are called **universal gates**. You could, in principle, build an entire computer using a single type of gate.
+
+To see why NAND is universal, consider that all of Boolean logic reduces to three operations: AND, OR, and NOT. If we can build all three from NAND alone, we can build anything. NOT is easy: a NAND gate with both inputs tied together gives us NOT, since `A NAND A = NOT(A AND A) = NOT A`. And as the next section will show, both AND and OR can be constructed from combinations of NAND gates.
+
+:::info NAND in Practice
+In modern chip manufacturing using **CMOS technology** (the dominant approach since the 1980s), NAND gates are generally preferred over NOR. This comes down to the physics of the two transistor types used in CMOS: the arrangement in NAND gates places the faster transistor type in the more performance-critical position, resulting in better speed and smaller chip area. Most modern processors are built primarily from NAND-based logic.
+
+Historically, NOR had its moment in the spotlight. The Apollo Guidance Computer, which navigated astronauts to the Moon in the 1960s, was built entirely from NOR gates.
 :::
 
-#### AND, OR, and XOR Gates
+#### Deriving AND, OR, and XOR
 
-With NAND and NOR as our universal building blocks, we can construct any other gate. Let us see how.
+With NAND as our universal building block, we can construct any other gate. The key is that NAND gives us NOT for free (tie both inputs together), and from NAND and NOT, everything else follows.
 
 **AND Gate**
 
-The AND gate returns true only when both inputs are true. Since NAND is simply NOT-AND, we can recover AND by inverting the NAND output:
+The AND gate returns true only when both inputs are true. Since NAND is simply NOT-AND, we recover AND by inverting the NAND output:
 
 ```
 A AND B = NOT (A NAND B)
@@ -431,16 +443,27 @@ B ────┤   │
 
 **OR Gate**
 
-The OR gate returns true when at least one input is true. We can derive OR from NAND using De Morgan's law:
+The OR gate returns true when at least one input is true. Deriving OR from NAND is less obvious than AND, so let us work through it carefully using De Morgan's laws.
+
+We start with De Morgan's second law:
 
 ```
-De Morgan's law:    NOT (A AND B) = (NOT A) OR (NOT B)
-
-Rearranging:        A OR B = NOT ((NOT A) AND (NOT B))
-                           = (NOT A) NAND (NOT B)
+NOT (A OR B) = (NOT A) AND (NOT B)
 ```
 
-This tells us: invert both inputs, then NAND them.
+This says: "neither A nor B" is the same as "not-A and not-B." We want `A OR B` isolated on one side, so we apply NOT to both sides:
+
+```
+A OR B = NOT ( (NOT A) AND (NOT B) )
+```
+
+Now read the right side from inside out. First we compute NOT A and NOT B. Then we AND them. Then we NOT the result. But that final step (applying NOT to an AND) is exactly what a NAND gate does. By definition, `X NAND Y = NOT(X AND Y)`. So we can replace `NOT(... AND ...)` with NAND:
+
+```
+A OR B = (NOT A) NAND (NOT B)
+```
+
+The recipe: invert both inputs, then feed them into a NAND gate.
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -457,8 +480,8 @@ This tells us: invert both inputs, then NAND them.
 │                   └─────┘                                       │
 │                                                                 │
 │   Step by step:                                                 │
-│     1. NOT A and NOT B are computed                            │
-│     2. NAND gives us NOT((NOT A) AND (NOT B))                  │
+│     1. Compute NOT A and NOT B                                 │
+│     2. NAND them: NOT((NOT A) AND (NOT B))                     │
 │     3. By De Morgan's law, this equals A OR B                  │
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
@@ -471,9 +494,19 @@ B ────┤   │
       └───┘
 ```
 
+Let us verify with a quick example. Suppose A = 1 and B = 0. We expect A OR B = 1.
+
+```
+Step 1:  NOT A = NOT 1 = 0
+Step 2:  NOT B = NOT 0 = 1
+Step 3:  0 NAND 1 = NOT(0 AND 1) = NOT 0 = 1  ✓
+```
+
+And since each NOT gate is itself a NAND gate with both inputs tied together, the entire OR circuit is built from three NAND gates. This confirms NAND's universality: NOT, AND, and OR can all be constructed from NAND alone, and therefore so can any Boolean function.
+
 **XOR Gate**
 
-The XOR (exclusive or) gate returns true when the inputs are *different*. Earlier, we saw that:
+The XOR (exclusive or) gate returns true when the inputs are *different*. Earlier, we defined it as:
 
 ```
 A XOR B = (A OR B) AND NOT (A AND B)
@@ -548,20 +581,16 @@ Here are the standard symbols you will encounter in circuit diagrams:
 
 ## Key Takeaways
 
-1. **Boolean algebra provides the mathematical foundation.** The three fundamental operations (AND, OR, NOT) can express any logical function. XOR is particularly useful for arithmetic and comparison.
+1. **Boolean algebra provides the mathematical foundation.** The three fundamental operations (AND, OR, NOT) can express any logical function. XOR, a derived operation, is particularly useful for arithmetic and comparison.
 
 2. **Truth tables formally define operations.** They exhaustively list all input combinations and outputs, making logical behavior unambiguous.
 
-3. **Circuits work through voltage and current.** Voltage is potential energy (like water pressure); current is flow. Complete paths are required for current to flow.
+3. **Transistor circuits naturally produce inverted outputs.** The voltage divider arrangement places the output above the transistors, so the output is always the inverse of the transistor behavior. This is why NAND and NOR are simpler to build than AND and OR.
 
-4. **Transistors are voltage-controlled switches.** The gate terminal senses voltage through electric fields, controlling whether current flows between source and drain.
+4. **NAND and NOR are universal gates.** Any Boolean function can be built from NAND gates alone (or NOR gates alone). In modern CMOS manufacturing, NAND is preferred for its speed and efficiency.
 
-5. **Logic gates implement Boolean operations in hardware.** Transistors combine to form gates; the arrangement determines the logical function.
-
-6. **NAND and NOR are universal gates.** Any circuit can be built from just one of these gate types, which is why they are fundamental to chip manufacturing.
+5. **Complex gates are built from simple ones.** AND, OR, and XOR are all derived from NAND and NOT, demonstrating how a small set of primitives generates unlimited complexity.
 
 ## Looking Ahead
 
-We now have the building blocks: logic gates that perform AND, OR, NOT, XOR, and their variants. But a single gate performs only a single operation. To do anything useful, we must combine gates into larger circuits.
-
-In the next article, we will explore **combinational circuits**: circuits where the output depends only on the current inputs. We will build circuits that add numbers, compare values, and select between alternatives. These are the workhorses of computation, and they emerge naturally from the gates we have just learned.
+AND, OR, NOT, XOR, NAND, NOR: we now have a vocabulary of logical operations, each implemented as a tiny circuit. Alone, none of them can do much. But gates are meant to be combined, and what emerges from their combinations is remarkable. The next article builds **combinational circuits**: adders, comparators, and multiplexers that form the computational core of every processor.

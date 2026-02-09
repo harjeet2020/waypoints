@@ -58,8 +58,8 @@ const sidebars = {
             'algorithms/learning-journey/fundamentals/stack-and-heap',
             'algorithms/learning-journey/fundamentals/memory-management',
             'algorithms/learning-journey/fundamentals/concurrency',
-            'algorithms/learning-journey/fundamentals/networking',
             'algorithms/learning-journey/fundamentals/abstraction-and-paradigms',
+            'algorithms/learning-journey/fundamentals/networking',
           ],
         },
         {
@@ -67,8 +67,8 @@ const sidebars = {
           label: 'Introduction to Algorithms',
           collapsed: false,
           items: [
-            'algorithms/learning-journey/fundamentals/recursion',
             'algorithms/learning-journey/fundamentals/algorithms-and-complexity',
+            'algorithms/learning-journey/fundamentals/recursion',
             'algorithms/learning-journey/fundamentals/math-prerequisites',
           ],
         },

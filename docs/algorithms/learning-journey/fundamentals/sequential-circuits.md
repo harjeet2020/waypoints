@@ -3,11 +3,11 @@ title: Sequential Circuits & the CPU
 ---
 ## From Computation to Memory
 
-In the previous two articles, we built up from Boolean algebra to logic gates, and from gates to combinational circuits that perform arithmetic, comparison, and selection. These circuits are powerful, but they share a fundamental limitation: **they have no memory**. The output depends only on the current inputs. The moment the inputs change, the output changes. There is no way to store information, count events, or remember what happened one nanosecond ago.
+A circuit that can add two numbers is impressive. A circuit that can add a *thousand* numbers in sequence requires something more: it needs to hold a running total, feeding each result back as input for the next step. This is the gap between answering a single question and carrying out a process. Our combinational circuits can compute, but they cannot remember.
 
-To build a computer that can execute programs, we need circuits that can *remember*. This is the domain of **sequential circuits**, and they form the foundation of memory, registers, and everything that makes a computer more than a fancy calculator.
+The missing ingredient is **feedback**: connecting a circuit's output back to its input, creating a loop that sustains itself even after the original signal is gone. This is the domain of **sequential circuits**, and they transform our gates and adders into something that can execute programs.
 
-This article completes our journey from transistors to the thinking machine. We will explore how feedback creates memory, how the clock synchronizes computation, and how the ALU brings everything together. By the end, you will understand not just how computers compute, but why the bitwise operations in your code work the way they do.
+This article completes the hardware journey. We will see how feedback creates memory, how the clock synchronizes computation, how the ALU performs operations on command, and how it all comes together in the fetch-decode-execute cycle. By the end, you will understand not just how computers compute, but why the bitwise operations in your code work the way they do.
 
 ## The Key Insight: Feedback
 
@@ -522,6 +522,6 @@ For general-purpose code, prefer clarity over clever bit tricks.
 
 ## Looking Ahead
 
-We have now traveled from the abstract mathematics of Boolean algebra down to the physical transistors, and back up to the complete CPU executing the fetch-decode-execute cycle. You understand how circuits add, compare, select, and remember.
+The CPU is complete: gates for logic, adders for arithmetic, flip-flops for memory, registers for state, and a clock that marches everything forward in lockstep. From a single transistor to the fetch-decode-execute cycle, we have traced the full path.
 
-But we have been focused on the *inside* of the CPU. How does the CPU actually communicate with RAM to fetch instructions and data? How do all the components we discussed in the very first article (CPU, RAM, storage) physically connect? In the next article, we will explore **computer architecture**: the buses, memory addressing, and cache hierarchy that tie the whole system together.
+But we have been looking exclusively at the CPU's internals. How does it communicate with RAM to fetch instructions and data? How do all the components from the very first article (CPU, RAM, storage) physically connect? The next article explores **computer architecture**: the buses, memory addressing, and cache hierarchy that tie the system together.

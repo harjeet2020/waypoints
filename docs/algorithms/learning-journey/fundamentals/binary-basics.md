@@ -3,11 +3,11 @@ title: Binary Basics
 ---
 ## The Language of Machines
 
-In the previous section, we explored the physical components of a computer: **CPU**, **RAM**, and **Storage**. This gives us a high-level overview of how a computer operates, but it also raises another question. How does a machine made of silicon and electricity understand anything at all? How does it store data and follow logical instructions?
+A CPU that executes billions of instructions per second. RAM that holds all your running programs. Storage that preserves files for years. We have seen what these components do, but not *how*. How does a machine made of silicon and electricity actually store and manipulate information?
 
-The answer lies in the most fundamental concept in computing: **binary**. Everything your computer does, every piece of data it stores, every calculation it performs, ultimately reduces to patterns of 1s and 0s.
+The answer lies in **binary**: a number system built entirely on two digits, 1 and 0. Everything your computer does, every calculation it performs, every piece of data it stores, ultimately reduces to patterns of these two values.
 
-This might seem limiting at first. How can two digits possibly represent the rich complexity of text, images, music, and video? By the end of this article, you will understand not just *how* binary works, but *why* it is the perfect foundation for digital computing.
+Two digits might seem absurdly limiting. How can they represent the richness of text, images, music, and video? By the end of this article, you will understand not just how binary works, but why it is the perfect foundation for digital computing.
 
 ## Why Binary?
 
@@ -401,4 +401,4 @@ We use powers of 2 because binary works in powers of 2. 1,024 is 2¹⁰, the pow
 
 ## Looking Ahead
 
-Now that we understand *how* binary works and *why* computers use it, we can explore how computers use binary to represent different types of data. In the next article, we'll see how computers represent numbers, both positive and negative, integers and decimals. We'll discover the elegant trick of two's complement and the sometimes surprising behavior of floating-point arithmetic.
+We can now read and write binary, convert between bases, and understand why two states are enough. So far, though, our binary numbers can only count upward from zero. A computer that cannot represent -5 or 3.14 would not get very far. The next article tackles this challenge, and the solutions turn out to be more elegant (and more surprising) than you might expect.

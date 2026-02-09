@@ -3,11 +3,9 @@ title: Representing Text
 ---
 ## From Numbers to Characters
 
-In the previous articles, we explored how computers represent data using binary. We saw how transistors give us 1s and 0s, how the binary number system lets us encode any integer, and how two's complement and IEEE 754 handle negative numbers and decimals.
+Numbers have a natural home in binary. An integer maps directly to a sequence of bits; the positional system handles the rest. But the letter 'A' is not a number. Neither is 'é', '中', or '😀'. Characters do not have magnitudes or decimal points. They belong to alphabets, scripts, and cultures spread across the globe. Encoding them requires a different idea entirely: assigning each character a number, and then agreeing on which number means what.
 
-But computers don't just work with numbers. They display text, process documents, and communicate across the internet using messages written in dozens of languages. How do we represent the letter "A" or the word "hello" or a Chinese character using only 1s and 0s?
-
-The answer involves mapping numbers to characters through **character encodings**. In this article, we'll trace the evolution from the simple ASCII standard to the comprehensive Unicode system that makes modern global computing possible.
+In this article, we will trace the evolution of that idea, from the simple ASCII standard of the 1960s to the comprehensive Unicode system that makes modern global computing possible.
 
 ## ASCII: The Original Standard
 
@@ -317,8 +315,6 @@ Always normalize strings before comparing them, especially when processing user 
 
 ## Looking Ahead
 
-We've now covered how computers represent fundamental data types in binary: integers, decimals, and text. With these building blocks, encoding colors, images, sound, and video becomes a matter of clever representation.
+With integers, decimals, and text, we have covered the essential data types. Everything so far has been about representation: how information sits in memory as patterns of bits. A computer, of course, does far more than store. It adds, compares, decides, and acts. What physical mechanism allows a machine built from switches to perform these transformations?
 
-But computers do more than store data. They transform it, following our instructions to perform calculations, make decisions, and execute complex logic. How does a machine built from simple switches actually *compute*?
-
-To answer that question, we first need to understand the physics that makes computation possible. In the next article, we will explore **electrical circuits**: how voltage, current, and resistance work together, how circuits are built from basic components, and how transistors fit into circuits as controllable switches. This foundation will prepare us to build logic gates in the article that follows.
+To answer that question, we need to understand the physics that makes computation possible. The next article explores **electrical circuits**: how voltage and current behave, how components share energy, and how a remarkable device called the transistor acts as a switch controlled by electric fields. This foundation will prepare us to build logic gates in the article that follows.

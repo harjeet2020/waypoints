@@ -47,8 +47,8 @@ The bridge from hardware to high-level programming.
 | 7     | `stack-and-heap.md`            | Stack & Heap                  |
 | 8     | `memory-management.md`         | Memory Management             |
 | 9     | `concurrency.md`               | Concurrency & Parallelism     |
-| 10    | `networking.md`                | Networking Fundamentals       |
-| 11    | `abstraction-and-paradigms.md` | Abstraction & Paradigms       |
+| 10    | `abstraction-and-paradigms.md` | Abstraction & Paradigms       |
+| 11    | `networking.md`                | Networking Fundamentals       |
 
 ### Introduction to Algorithms
 
@@ -56,8 +56,8 @@ Measuring efficiency and the math behind it.
 
 | Order | Filename                       | Sidebar Label             |
 |-------|--------------------------------|---------------------------|
-| 1     | `recursion.md`                 | Recursion & the Call Stack |
-| 2     | `algorithms-and-complexity.md` | Algorithms & Complexity   |
+| 1     | `algorithms-and-complexity.md` | Algorithms & Complexity   |
+| 2     | `recursion.md`                 | Recursion & the Call Stack |
 | 3     | `math-prerequisites.md`        | Math Prerequisites        |
 
 ---
@@ -103,8 +103,8 @@ Update `sidebars.js` to include:
         'algorithms/learning-journey/fundamentals/stack-and-heap',
         'algorithms/learning-journey/fundamentals/memory-management',
         'algorithms/learning-journey/fundamentals/concurrency',
-        'algorithms/learning-journey/fundamentals/networking',
         'algorithms/learning-journey/fundamentals/abstraction-and-paradigms',
+        'algorithms/learning-journey/fundamentals/networking',
       ],
     },
     {
@@ -112,8 +112,8 @@ Update `sidebars.js` to include:
       label: 'Introduction to Algorithms',
       collapsed: false,
       items: [
-        'algorithms/learning-journey/fundamentals/recursion',
         'algorithms/learning-journey/fundamentals/algorithms-and-complexity',
+        'algorithms/learning-journey/fundamentals/recursion',
         'algorithms/learning-journey/fundamentals/math-prerequisites',
       ],
     },
@@ -583,6 +583,29 @@ Update `sidebars.js` to include:
 
 ---
 
+#### `abstraction-and-paradigms.md` — Organizing Complexity
+
+**Goal:** Understand why we structure code the way we do, and the costs of abstraction.
+
+**Topics:**
+- What is abstraction and why it's essential
+- Procedural programming (functions as building blocks)
+- Object-Oriented Programming (OOP):
+  - Classes and objects
+  - Encapsulation, inheritance, polymorphism
+  - When OOP shines (modeling real-world entities)
+- Functional Programming (FP):
+  - Pure functions, immutability
+  - First-class functions, higher-order functions
+  - When FP shines (data transformations, concurrency)
+- The abstraction tradeoff:
+  - Code reuse and maintainability benefits
+  - Hidden complexity and performance costs
+  - "Leaky abstractions"—when you need to understand what's underneath
+- Practical guidance: choosing the right paradigm for the job
+
+---
+
 #### `networking.md` — Networking Fundamentals
 
 **Goal:** Understand how computers communicate over networks and how the internet works.
@@ -627,30 +650,32 @@ Update `sidebars.js` to include:
 
 ---
 
-#### `abstraction-and-paradigms.md` — Organizing Complexity
+### Introduction to Algorithms
 
-**Goal:** Understand why we structure code the way we do, and the costs of abstraction.
+#### `algorithms-and-complexity.md` — Measuring Efficiency
+
+**Goal:** Understand what algorithms are and how we measure their performance.
 
 **Topics:**
-- What is abstraction and why it's essential
-- Procedural programming (functions as building blocks)
-- Object-Oriented Programming (OOP):
-  - Classes and objects
-  - Encapsulation, inheritance, polymorphism
-  - When OOP shines (modeling real-world entities)
-- Functional Programming (FP):
-  - Pure functions, immutability
-  - First-class functions, higher-order functions
-  - When FP shines (data transformations, concurrency)
-- The abstraction tradeoff:
-  - Code reuse and maintainability benefits
-  - Hidden complexity and performance costs
-  - "Leaky abstractions"—when you need to understand what's underneath
-- Practical guidance: choosing the right paradigm for the job
+- What is an algorithm? (step-by-step problem-solving procedure)
+- Why efficiency matters (scaling from 100 to 1 million items)
+- Big O notation:
+  - What it measures (worst-case growth rate)
+  - Common complexities with examples:
+    - O(1) — constant
+    - O(log n) — logarithmic
+    - O(n) — linear
+    - O(n log n) — linearithmic
+    - O(n²) — quadratic
+    - O(2ⁿ) — exponential
+    - O(n!) — factorial
+  - How to analyze simple code
+- Time complexity vs space complexity
+- Best case, average case, worst case
+- Big Omega (Ω) and Big Theta (Θ) briefly
+- Amortized analysis (brief intro)
 
 ---
-
-### Introduction to Algorithms
 
 #### `recursion.md` — Recursion & the Call Stack
 
@@ -679,32 +704,7 @@ Update `sidebars.js` to include:
   - When iteration is better (simple loops, performance)
 - Tail recursion and optimization (brief)
 - Stack overflow: when recursion goes too deep
-- Preview: recursive complexity analysis
-
----
-
-#### `algorithms-and-complexity.md` — Measuring Efficiency
-
-**Goal:** Understand what algorithms are and how we measure their performance.
-
-**Topics:**
-- What is an algorithm? (step-by-step problem-solving procedure)
-- Why efficiency matters (scaling from 100 to 1 million items)
-- Big O notation:
-  - What it measures (worst-case growth rate)
-  - Common complexities with examples:
-    - O(1) — constant
-    - O(log n) — logarithmic
-    - O(n) — linear
-    - O(n log n) — linearithmic
-    - O(n²) — quadratic
-    - O(2ⁿ) — exponential
-    - O(n!) — factorial
-  - How to analyze simple code
-- Time complexity vs space complexity
-- Best case, average case, worst case
-- Big Omega (Ω) and Big Theta (Θ) briefly
-- Amortized analysis (brief intro)
+- Recursive complexity analysis
 
 ---
 
@@ -748,12 +748,12 @@ The order follows a **bottom-up approach**, organized into three categories:
    - Types, memory layout, stack and heap
    - Memory management strategies
    - Concurrency and parallelism
-   - Networking fundamentals
    - Abstraction and programming paradigms
+   - Networking fundamentals
 
 3. **Introduction to Algorithms** (3 files): How we solve problems and measure efficiency
-   - Recursion as a fundamental technique
    - Algorithm analysis and Big O notation
+   - Recursion as a fundamental technique
    - Mathematical tools for understanding complexity
 
 This way, when readers reach Big O notation, they already understand *why* certain operations are faster (memory access patterns, CPU cycles, OS scheduling) rather than just memorizing "O(n) is slower than O(log n)."
