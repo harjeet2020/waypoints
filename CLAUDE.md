@@ -178,6 +178,23 @@ When I was first introduced to algorithms & data structures, I quickly developed
 Studying algorithms & data structures because I wanted to was a completely different experience. Instead of a rat's race to become the best riddle-solver of them all, it became a slow-paced, thoughtful exploration. I encourage you to take a similar approach - the journey matters more than the destination.
 ```
 
+### Article Intro/Outro Pattern
+
+All learning path articles (fundamentals, JavaScript deep dive, etc.) follow a consistent intro/outro structure:
+
+**Intro (before the first h2):**
+- 2-4 paragraphs that hook the reader and set context
+- Explain *why* the topic matters, not just *what* it covers
+- Give a taste of the concepts ahead to encourage continued reading
+- Use concrete examples or scenarios the reader can relate to
+- Tone: warm, curious, intellectually engaging
+
+**Outro (two final sections):**
+
+`## Key Takeaways` - A numbered list of the most important points from the article. Each item starts with a **bold summary phrase** followed by a one-sentence elaboration. Keep it to 4-7 items. These should be concise enough to serve as a quick-reference refresher.
+
+`## Looking Ahead` - 1-2 paragraphs that elegantly wrap up the current article in a few words, then bridge to the next article by teasing its topic. Frame the transition as a natural question that arises from what was just learned. End with the next article's title in **bold**.
+
 ## Development Commands
 
 ```bash

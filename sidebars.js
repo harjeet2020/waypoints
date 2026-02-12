@@ -226,7 +226,64 @@ const sidebars = {
     {
       type: 'doc',
       id: 'technical-knowledge/javascript/index',
-      label: 'JavaScript Overview',
+      label: 'Overview',
+    },
+    {
+      type: 'category',
+      label: 'The Engine & Execution Model',
+      collapsed: false,
+      items: [
+        'technical-knowledge/javascript/how-javascript-runs',
+        'technical-knowledge/javascript/execution-context',
+        'technical-knowledge/javascript/the-call-stack',
+        'technical-knowledge/javascript/memory-and-garbage-collection',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Types & Operations',
+      collapsed: false,
+      items: [
+        'technical-knowledge/javascript/types-and-values',
+        'technical-knowledge/javascript/coercion',
+        'technical-knowledge/javascript/equality-and-comparison',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Scope & Functions',
+      collapsed: false,
+      items: [
+        'technical-knowledge/javascript/scope-and-lexical-environment',
+        'technical-knowledge/javascript/hoisting-and-the-tdz',
+        'technical-knowledge/javascript/closures',
+        'technical-knowledge/javascript/function-forms',
+        'technical-knowledge/javascript/higher-order-functions-and-callbacks',
+        'technical-knowledge/javascript/modules',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Objects & Inheritance',
+      collapsed: false,
+      items: [
+        'technical-knowledge/javascript/objects-and-properties',
+        'technical-knowledge/javascript/the-this-keyword',
+        'technical-knowledge/javascript/prototypes',
+        'technical-knowledge/javascript/classes-and-factory-functions',
+        'technical-knowledge/javascript/proxy-and-reflect',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Asynchronous JavaScript',
+      collapsed: false,
+      items: [
+        'technical-knowledge/javascript/the-event-loop',
+        'technical-knowledge/javascript/promises',
+        'technical-knowledge/javascript/async-await',
+        'technical-knowledge/javascript/generators-and-iterators',
+      ],
     },
   ],
 
